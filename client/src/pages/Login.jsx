@@ -22,23 +22,30 @@ function Login() {
   }
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          value={credentials.username}
-          onChange={(e) => setCredentials({...credentials, username: e.target.value})}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={credentials.password}
-          onChange={(e) => setCredentials({...credentials, password: e.target.value})}
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-page">
+      <header className="product-header">
+        <h1 className="product-title">WORKIFY</h1>
+      </header>
+      <div className="login-container">
+        <div className="login-box">
+          <h2>Sign In</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Username"
+              value={credentials.username}
+              onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={credentials.password}
+              onChange={(e) => setCredentials({...credentials, password: e.target.value})}
+            />
+            <button type="submit">Sign In</button>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }
