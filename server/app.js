@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt } = require('./mongo1');
+const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications } = require('./mongo1');
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -33,6 +33,13 @@ io.on('connection', (socket) => {
             socket.emit("loginDenied", content )
         }
        }
+    })
+
+    socket.on("applicationSubmit", async (formData, jobId) => {
+        console.log(formData, jobId);
+        const applicationId = await insertApplication(formData, jobId);
+        console.log("Application ID:", applicationId);
+        await updateJobApplications(jobId, applicationId);
     })
 
     socket.on("jobsFetch", async (jobs) => {

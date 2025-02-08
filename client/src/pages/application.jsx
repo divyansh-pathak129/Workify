@@ -106,7 +106,7 @@ const ApplicationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    socket.emit("applicationSubmit", formData);
+    socket.emit("applicationSubmit", formData, jobId);
     console.log('formData:', formData);
 
     try {
