@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData, fetchJobs } = require('./mongo1');
+const { login, fetchUserData, fetchJobs, evalate, getRawData } = require('./mongo1');
 
 
 
@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
     socket.on("login", async (credentials) => {
        if(credentials){
-        console.log(credentials);
+        // console.log(credentials);
         const content = await login({credentials});
         console.log(content);
         if(content.status === "ok"){
@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
 
     socket.on("jobsFetch", async (jobs) => {
         const data = await fetchJobs(jobs); 
-        console.log(data);
+        // console.log(data);
         if(data.status === "ok"){
             socket.emit("jobsData", data)
         }
@@ -43,10 +43,19 @@ io.on('connection', (socket) => {
 
     socket.on("fetchUserData", async (id) => {
         const data = await fetchUserData(id);
-        console.log(data);
+        // console.log(data);
         if(data.status === "ok"){
             socket.emit("userData", data)
         }
+    })
+
+    socket.on("evaluateJob", async (jobId) => {
+        console.log('Evaluating job:', jobId);
+        const rawdata = await getRawData(jobId);
+        // const report = await evalate(jobId);
+        const report = rawdata;
+        console.log(rawdata)
+        socket.emit("report", report)
     })
 
 })
