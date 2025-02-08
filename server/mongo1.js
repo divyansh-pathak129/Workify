@@ -199,12 +199,12 @@ For each application, provide scores on a scale of 1-10 for:
 ${applicationsData.content.map((app, index) => `
 APPLICATION ${index + 1} (ID: ${app._id}):
 General Info:
-- Name: ${app.general.name}
-- Education: ${app.education.degree} in ${app.education.field} from ${app.education.school}
-- Experience: ${app.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
-- Skills: ${app.skills.join(', ')}
-- Achievements: ${app.achievements.join(', ')}
-- Notes: ${app.notes}
+- Name: ${app.content.general.name}
+- Education: ${app.content.education.degree} in ${app.content.education.field} from ${app.content.education.school}
+- Experience: ${app.content.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
+- Skills: ${app.content.skills.join(', ')}
+- Achievements: ${app.content.achievements.join(', ')}
+- Notes: ${app.content.notes}
 `).join('\n')}
 
 Please provide:
