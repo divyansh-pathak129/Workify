@@ -69,17 +69,14 @@
     height: auto;
     max-height: 64px;
     overflow: hidden;
-    transform-origin: top;
 
     &.expanded {
       max-height: 280px;
       background: rgba(30, 30, 47, 0.9);
-      transform: none;
     }
 
     &:hover {
       background: rgba(30, 30, 47, 0.8);
-      transform: translateY(-1px);
     }
 
     .profile-avatar {
@@ -135,14 +132,8 @@
         margin-top: 16px;
         padding-top: 16px;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        opacity: 0;
-        transform: translateY(-5px);
-        transition: all 0.2s ease;
-
-        &.hiding {
-          opacity: 0;
-          transform: translateY(-5px);
-        }
+        opacity: 1;
+        transform: none;
 
         .profile-detail {
           margin-bottom: 12px;
@@ -186,17 +177,9 @@
       }
     }
 
-    &.expanded .profile-expanded {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    &:not(.expanded) {
+    &.expanded .profile-expanded,
+    &:not(.expanded) .profile-expanded {
       transform: none;
-      .profile-expanded {
-        opacity: 0;
-        transform: translateY(-5px);
-      }
     }
   }
 }
