@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData } = require('./mongo1');
+const { login, fetchUserData, fetchJobs } = require('./mongo1');
 
 
 
@@ -34,11 +34,19 @@ io.on('connection', (socket) => {
        }
     })
 
+    socket.on("jobsFetch", async (jobs) => {
+        const data = await fetchJobs(jobs); 
+        console.log(data);
+        if(data.status === "ok"){
+            socket.emit("jobsData", data)
+        }
+    })
+
     socket.on("fetchUserData", async (id) => {
         const data = await fetchUserData(id);
         console.log(data);
         if(data.status === "ok"){
-            console.log("Done dune")
+            // console.log("Done dune")
             socket.emit("userData", data)
         }
         // callback(data);

@@ -18,7 +18,7 @@ const socket = io("http://localhost:3000", {
 function Dashboard() {
 
   const [userData, setUserData] = useState({});
-
+  const [jobsData, setJobsData] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -27,7 +27,13 @@ function Dashboard() {
 
   socket.on("userData", (content) => {
     console.log(content)
-    setUserData(content.content)  
+    setUserData(content.content)
+    socket.emit("jobsFetch", content.content.jobs)
+  })
+
+  socket.on("jobsData", async(data) => {
+    console.log(data)
+    setJobsData(data.content)
   })
 
 
