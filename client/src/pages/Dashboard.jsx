@@ -17,7 +17,9 @@ const socket = io("http://localhost:3000", {
 
 
 function Dashboard() {
-
+  // Add tempTheme state to track unsaved changes
+  const [tempTheme, setTempTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
   const { id } = useParams();
@@ -26,6 +28,26 @@ function Dashboard() {
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Add theme effect
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setIsDarkTheme(savedTheme === 'dark');
+    setTempTheme(savedTheme === 'dark');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const handleThemeToggle = () => {
+    setTempTheme(!tempTheme);
+  };
+
+  const handleSaveSettings = () => {
+    setIsDarkTheme(tempTheme);
+    localStorage.setItem('theme', tempTheme ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', tempTheme ? 'dark' : 'light');
+    setIsSettingsOpen(false);
+    toast.success('Theme settings saved!');
+  };
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -75,7 +97,6 @@ function Dashboard() {
   };
 
   const handleLogout = () => {
-    // Simple navigation to login page
     navigate('/');
   };
 
@@ -145,7 +166,7 @@ function Dashboard() {
                   </div>
                   <button 
                     className="logout-btn"
-                    onClick={handleLogout} // Remove the event parameter and stopPropagation
+                    onClick={handleLogout}
                   >
                     Log Out
                   </button>
@@ -216,15 +237,18 @@ function Dashboard() {
                   <input 
                     type="checkbox"
                     id="theme-switch"
-                    checked={false}
-                    onChange={() => {}}
+                    checked={tempTheme}
+                    onChange={handleThemeToggle}
                   />
                   <label htmlFor="theme-switch">
                     <span className="toggle-track"></span>
-                    <span className="toggle-label">Dark</span>
+                    <span className="toggle-label">{tempTheme ? 'Dark' : 'Light'}</span>
                   </label>
                 </div>
               </div>
+              <button className="settings-save-btn" onClick={handleSaveSettings}>
+                Save Changes
+              </button>
             </div>
           </div>
         </div>
