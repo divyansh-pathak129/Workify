@@ -3,16 +3,9 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://divyanshpathak129:<db_password>@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
+const { login, fetchUserData } = require('./mongo1');
 
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+
 
 const app = express()
 app.use(cors());
@@ -28,7 +21,19 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
-    console.log(`User Connected: ${socket.id}`);
+    socket.on("login", async (credentials, callback) => {
+        console.log(credentials);
+        const content = await login({credentials});
+        console.log(content);
+        callback(content);
+        socket.emit("loginCreds", content )
+    })
+
+    socket.on("fetchUserData", async (credentials, callback) => {
+        const data = await fetchUserData({credentials});
+        console.log(data);
+        callback(data);
+    })
 
     socket.on('disconnect', () => {
         console.log(`User Disconnected: ${socket.id}`);
