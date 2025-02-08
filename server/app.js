@@ -62,18 +62,37 @@ io.on('connection', (socket) => {
         try {
             console.log('Evaluating job:', jobId);
             const jobData = await getRawData(jobId);
+            if (!jobData) {
+                throw new Error("Job data not found");
+            }
+            
             const applicationsData = await applicationData(jobData.applications);
+            if (!applicationsData || !applicationsData.content) {
+                throw new Error("Applications data not found");
+            }
+
             const prompt = await generatePrompt(jobData, applicationsData);
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const analysisText = await result.response.text();
-            console.log(analysisText);
-            socket.emit("report", analysisText);
+            
+            // Validate that we have valid JSON before sending
+            try {
+                const parsedAnalysis = JSON.parse(analysisText);
+                console.log("Sending report data:", parsedAnalysis);
+                socket.emit("reportData", parsedAnalysis);
+            } catch (parseError) {
+                console.error("Invalid JSON response:", parseError);
+                socket.emit("reportError", { 
+                    status: "error", 
+                    message: "Invalid analysis format" 
+                });
+            }
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
-            socket.emit("error", { 
+            socket.emit("reportError", { 
                 status: "error", 
-                message: "Failed to generate analysis" 
+                message: error.message || "Failed to generate analysis" 
             });
         }
     })

@@ -29,42 +29,6 @@ function Report() {
   const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
-  // socket.on("report", (content) => {
-  //     const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
-  //     setReportData(parsedContent);
-  //     console.log(parsedContent);
-  //   });
-
-  socket.on("report", (content) => {
-    setReportData(JSON.parse(content));
-    console.log("This is the main content for the report: ", JSON.parse(content));
-  })
-
-  useEffect(() => {
-    // Fetch report data when component mounts
-    if (jobId) {
-      socket.emit("fetchReport", jobId);
-    }
-
-    // Socket event listeners
-    const handleReportData = (content) => {
-      try {
-        const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
-        setReportData(parsedContent);
-      } catch (error) {
-        console.error("Error parsing report data:", error);
-        toast.error('Error loading report data');
-      }
-    };
-
-    socket.on("report", handleReportData);
-
-    // Cleanup
-    return () => {
-      socket.off("report", handleReportData);
-    };
-  }, [jobId]);
-
   useEffect(() => {
     socket.emit("fetchUserData", id)
   },[])
@@ -152,6 +116,10 @@ function Report() {
       'Contact'
     ];
   };
+
+  socket.on("reportData", async(data) => {
+    console.log(data)
+  })
 
   const handleEvaluate = (jobId) => {
     socket.emit("evaluateJob", jobId)
