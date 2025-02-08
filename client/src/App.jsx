@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 function App() {
   return (
     <Routes>
+      <Route path="/report" element={<Login />} />
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />
