@@ -112,9 +112,8 @@ const ApplicationForm = () => {
 
     try {
       const submission = {
-        id: Date.now(),
+        jobId, // Using the jobId from URL params
         submittedAt: new Date().toISOString(),
-        jobId, // from useParams
         ...formData
       };
 

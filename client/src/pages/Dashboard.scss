@@ -461,6 +461,18 @@
       filter: brightness(0.9);
     }
   }
+
+  .share-btn {
+    background: var(--caribbean-green-50);
+    color: var(--caribbean-green-700);
+    border: 1px solid var(--caribbean-green-300);
+
+    &:hover {
+      background: var(--caribbean-green-600);
+      color: white;
+      border-color: var(--caribbean-green-600);
+    }
+  }
 }
 
 .dashboard-container {
@@ -911,6 +923,33 @@
       color: white;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+    }
+  }
+
+  .share-btn {
+    background: rgba(23, 227, 178, 0.1);
+    color: var(--caribbean-green-400);
+    border: 1px solid var(--caribbean-green-600);
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+
+    &:hover {
+      background: var(--caribbean-green-500);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
     }
   }
 }
