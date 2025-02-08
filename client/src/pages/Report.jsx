@@ -28,6 +28,10 @@ function Report() {
   const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
+  socket.on("report", (content) => {
+    console.log(content)
+  })
+
   useEffect(() => {
     socket.emit("fetchUserData", id)
   },[])
@@ -39,7 +43,7 @@ function Report() {
   })
 
   socket.on("jobsData", async(data) => {
-    console.log(data)
+    // console.log(data)
     setJobsData(data.content)
   })
 
