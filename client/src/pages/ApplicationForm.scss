@@ -1,0 +1,96 @@
+@import './Dashboard.scss';
+
+.application-container {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+
+  .application-header {
+    background: var(--bg-secondary);
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .application-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    .job-details {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+
+      h1 {
+        color: var(--caribbean-green-400);
+        margin-bottom: 0.5rem;
+      }
+
+      .company {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .application-form {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+
+      h2 {
+        color: var(--caribbean-green-400);
+        margin-bottom: 1.5rem;
+      }
+
+      .form-section {
+        margin-bottom: 2rem;
+
+        h3 {
+          color: var(--text-primary);
+          margin-bottom: 1rem;
+        }
+
+        .input-group {
+          display: grid;
+          gap: 1rem;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+          input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+
+            &:focus {
+              border-color: var(--caribbean-green-400);
+              outline: none;
+            }
+          }
+        }
+      }
+
+      .submit-btn {
+        background: var(--caribbean-green-500);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: var(--caribbean-green-600);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
