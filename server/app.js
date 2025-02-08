@@ -62,6 +62,7 @@ io.on('connection', (socket) => {
             const result = await model.generateContent(prompt);
             const analysis = await result.response.text();
             console.log(analysis);
+            
             socket.emit("report", {
                 status: "ok",
                 content: {

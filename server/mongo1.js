@@ -207,27 +207,40 @@ async function generatePrompt(jobData, applicationsData) {
     - Notes: ${app.content.notes}
     `).join('\n')}
     
-    Please provide:
-    1. Individual Application Analysis:
-       For each application, provide:
-       - Competence Value Score (1-10)
-       - Skill Value Score (1-10)
-       - Cultural Value Score (1-10)
-       - Brief justification (2-3 sentences)
-       - Overall applicant score (weighted average: 40% competence, 40% skills, 20% cultural fit)
-    
-    2. Comparative Analysis:
-       - Rank applications from highest to lowest overall score
-       - Identify top 3 candidates with brief explanations
-       - Note any standout strengths or concerns
-    
-    3. Hiring Recommendations:
-       - Suggest next steps for top candidates
-       - Identify any additional information needed
-       - Flag any potential red flags or areas needing clarification
-    
-    Format the response in a clear, structured manner using markdown for better readability.
-    Ensure all scores are justified with specific examples from the applications.
+    Provide your analysis in the following strict JSON format with no additional text:
+    {
+      "applicationAnalysis": [
+        {
+          "applicationId": "string",
+          "applicantName": "string",
+          "applicantEmail": "string",
+          "competenceScore": number,
+          "skillScore": number,
+          "culturalScore": number,
+          "overallScore": number,
+          "justification": "string"
+        }
+      ],
+      "comparativeAnalysis": [
+        {
+          "applicationId": "string",
+          "applicantName": "string",
+          "overallScore": number,
+          "explanation": "string"
+        }
+      ],
+      "hiringRecommendations": {
+        "topCandidate": {
+          "applicationId": "string",
+          "applicantName": "string"
+        },
+        "nextSteps": "string",
+        "additionalInformationNeeded": "string",
+        "potentialRedFlags": "string"
+      }
+    }
+
+    Return ONLY the JSON object with no additional text or explanation. Ensure the response is valid JSON that can be parsed directly.
     `;
 
     return prompt;
