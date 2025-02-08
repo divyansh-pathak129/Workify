@@ -59,10 +59,25 @@ io.on('connection', (socket) => {
             const prompt = await generatePrompt(jobData, applicationsData);
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
-            const analysis = await result.response.text();
-            // const analysis = "This is the analysis of the job";
-            console.log(analysis);
-            socket.emit("report", analysis);
+            const analysisText = await result.response.text();
+            console.log("Analysis:", analysisText);
+            try {
+                // Parse the response into JSON
+                const analysisJson = JSON.parse(analysisText);
+                
+                // Emit the structured response
+                socket.emit("report", {
+                    status: "ok",
+                    analysis: analysisJson
+                });
+            } catch (parseError) {
+                console.error("Error parsing AI response:", parseError);
+                console.log("Raw AI response:", analysisText);
+                socket.emit("error", {
+                    status: "error",
+                    message: "Failed to parse AI analysis"
+                });
+            }
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
             socket.emit("error", { 

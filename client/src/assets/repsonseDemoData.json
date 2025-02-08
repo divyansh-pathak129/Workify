@@ -1,0 +1,47 @@
+{
+  "applicationAnalysis": [
+    {
+      "applicationId": "67a75f845c65e303c752fe9c",
+      "applicantName": "John Doe",
+      "applicantEmail": "XoE6o@example.com",
+      "competenceScore": 9,
+      "skillScore": 10,
+      "culturalScore": 8,
+      "overallScore": 9,
+      "justification": "John Doe has a strong educational background and relevant experience in software engineering at leading tech companies. He possesses a comprehensive skillset that aligns well with the requirements. His achievements and notes indicate a passion for building scalable and reliable software systems, which resonates with the company's values of integrity."
+    },
+    {
+      "applicationId": "67a74fd95c65e303c752fe9b",
+      "applicantName": "John MMDoe",
+      "applicantEmail": "XoE62o@example.com",
+      "competenceScore": 7,
+      "skillScore": 7,
+      "culturalScore": 7,
+      "overallScore": 7,
+      "justification": "John MMDoe has a solid educational background and some experience in software engineering. However, his skillset and experience are not as comprehensive as the first applicant. His achievements and notes are also less specific and do not provide as strong evidence of his qualifications."
+    }
+  ],
+  "comparativeAnalysis": [
+    {
+      "applicationId": "67a75f845c65e303c752fe9c",
+      "applicantName": "John Doe",
+      "overallScore": 9,
+      "explanation": "John Doe stands out as the top candidate based on his superior qualifications, including education, experience, skills, achievements, and cultural fit with the company's values."
+    },
+    {
+      "applicationId": "67a74fd95c65e303c752fe9b",
+      "applicantName": "John MMDoe",
+      "overallScore": 7,
+      "explanation": "While John MMDoe is a qualified candidate, his overall score is lower than John Doe's due to his less extensive experience, skillset, and cultural alignment."
+    }
+  ],
+  "hiringRecommendations": {
+    "topCandidate": {
+      "applicationId": "67a75f845c65e303c752fe9c",
+      "applicantName": "John Doe"
+    },
+    "nextSteps": "Schedule an interview with John Doe to further assess his qualifications and cultural fit. Request references to verify his experience and achievements.",
+    "additionalInformationNeeded": "None",
+    "potentialRedFlags": "None identified"
+  }
+}

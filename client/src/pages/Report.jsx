@@ -20,6 +20,7 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
+  const [reportData, setReportData] = useState({});
   const { id } = useParams();
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -29,7 +30,8 @@ function Report() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   socket.on("report", (content) => {
-    console.log("This is the main content for the report: ", JSON.parse(content));
+    setReportData(content);
+    console.log("This is the main content for the report: ", JSON.parse(content), content);
   })
 
   useEffect(() => {

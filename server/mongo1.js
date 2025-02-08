@@ -208,7 +208,7 @@ async function generatePrompt(jobData, applicationsData) {
     - Notes: ${app.content.notes}
     `).join('\n')}
     
-    Provide your analysis in the following strict JSON format with no additional text:
+    Provide your analysis in the following strict JSON format with no additional text also dont put any backticks it should be a valid JSON object:
     {
       "applicationAnalysis": [
         {
