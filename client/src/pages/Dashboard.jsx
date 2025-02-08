@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams} from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams} from 'react-router-dom';
 import './Dashboard.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
@@ -23,6 +23,7 @@ function Dashboard() {
   const { id } = useParams();
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -65,7 +66,9 @@ function Dashboard() {
   };
 
   const handleEvaluate = (jobId) => {
-    console.log('Evaluating job:', jobId);
+    socket.emit("evaluateJob", jobId)
+    navigate("/report")
+    // console.log('Evaluating job:', jobId);
     // Add your evaluation logic here
   };
 
