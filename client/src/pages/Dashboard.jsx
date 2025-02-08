@@ -36,6 +36,19 @@ function Dashboard() {
     setJobsData(data.content)
   })
 
+  const formatValue = (value) => {
+    if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+    if (value instanceof Date) return value.toLocaleDateString();
+    if (Array.isArray(value)) return value.join(', ');
+    if (value === undefined || value === null) return '-';
+    return value;
+  };
+
+  const getHeaders = () => {
+    if (jobsData.length === 0) return [];
+    const exclude = ['id', '_id']; // fields to exclude from table
+    return Object.keys(jobsData[0]).filter(key => !exclude.includes(key));
+  };
 
   return (
     <div className="dashboard-container">
@@ -61,7 +74,28 @@ function Dashboard() {
         </div>
         <div className='dashboard-content-body'>
           <div className="card">
-            {/* Your dashboard content will go here */}
+            <div className="table-wrapper">
+              <table className="dashboard-table">
+                <thead>
+                  <tr>
+                    {getHeaders().map(header => (
+                      <th key={header}>
+                        {header.charAt(0).toUpperCase() + header.slice(1).replace(/([A-Z])/g, ' $1')}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobsData.map((job, index) => (
+                    <tr key={job.id || index}>
+                      {getHeaders().map(header => (
+                        <td key={header}>{formatValue(job[header])}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
