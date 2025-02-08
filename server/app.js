@@ -60,6 +60,7 @@ io.on('connection', (socket) => {
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const analysis = await result.response.text();
+            // const analysis = "This is the analysis of the job";
             console.log(analysis);
             socket.emit("report", analysis);
         } catch (error) {

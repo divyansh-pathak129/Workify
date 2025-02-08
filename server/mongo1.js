@@ -200,6 +200,7 @@ async function generatePrompt(jobData, applicationsData) {
     APPLICATION ${index + 1} (ID: ${app._id}):
     General Info:
     - Name: ${app.content.general.name}
+    - Email: ${app.content.general.email}
     - Education: ${app.content.education.degree} in ${app.content.education.field} from ${app.content.education.school}
     - Experience: ${app.content.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
     - Skills: ${app.content.skills.join(', ')}
