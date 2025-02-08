@@ -20,6 +20,8 @@ function Dashboard() {
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
   const { id } = useParams();
+  const [isProfileExpanded, setIsProfileExpanded] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -66,6 +68,23 @@ function Dashboard() {
     // Add your evaluation logic here
   };
 
+  const handleLogout = () => {
+    // Add logout logic here
+    console.log('Logging out...');
+  };
+
+  const handleProfileClick = () => {
+    if (isProfileExpanded) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsProfileExpanded(false);
+        setIsClosing(false);
+      }, 300);
+    } else {
+      setIsProfileExpanded(true);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -76,13 +95,41 @@ function Dashboard() {
           {/* Navigation items will go here */}
         </div>
         <div className='dashboard-sidebar-bottom'>
-          <div className="profile-card">
-            <div className="profile-avatar">
-              {userData.name ? userData.name[0].toUpperCase() : 'U'}
-            </div>
+          <div 
+            className={`profile-card ${isProfileExpanded ? 'expanded' : ''}`}
+            onClick={handleProfileClick}
+          >
             <div className="profile-info">
-              <h3>{userData.name}</h3>
-              <p>{userData.email || 'user@workify.com'}</p>
+              <div className="profile-header">
+                <div className="profile-avatar">
+                  {userData.name ? userData.name[0].toUpperCase() : 'U'}
+                </div>
+                <div>
+                  <h3>{userData.name}</h3>
+                  <p>{userData.email || 'user@workify.com'}</p>
+                </div>
+              </div>
+              {isProfileExpanded && (
+                <div className={`profile-expanded ${isClosing ? 'hiding' : ''}`}>
+                  <div className="profile-detail">
+                    <span>Company</span>
+                    <strong>Workify Solutions</strong>
+                  </div>
+                  <div className="profile-detail">
+                    <span>Role</span>
+                    <strong>Hiring Manager</strong>
+                  </div>
+                  <button 
+                    className="logout-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLogout();
+                    }}
+                  >
+                    Log Out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
