@@ -69,29 +69,55 @@ function Report() {
     toast.success('Theme settings saved!');
   };
 
-  const formatValue = (value, field) => {
-    if (field === 'dateOfCreation') {
-      return new Date(value).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
+  const formatValue = (application, field) => {
+    switch (field) {
+      case 'Applicant Name':
+        return application.applicantName;
+      case 'Competence Score':
+        return application.competenceScore;
+      case 'Skill Score':
+        return application.skillScore;
+      case 'Cultural Score':
+        return application.culturalScore;
+      case 'Overall Score':
+        return application.overallScore;
+      case 'Justification':
+        return application.justification;
+      case 'Contact':
+        return (
+          <a 
+            href={`mailto:${application.applicantEmail}`}
+            className="mail-btn"
+            title="Send email to candidate"
+          >
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2"
+            >
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+          </a>
+        );
+      default:
+        return '-';
     }
-    if (field === 'applications') {
-      if (!Array.isArray(value)) return '0';
-      const uniqueApps = new Set(value);
-      return uniqueApps.size.toString();
-    }
-    if (typeof value === 'boolean') return value ? 'Yes' : 'No';
-    if (Array.isArray(value)) return value.join(', ');
-    if (value === undefined || value === null) return '-';
-    return value;
   };
 
   const getHeaders = () => {
-    if (jobsData.length === 0) return [];
-    const exclude = ['id', '_id', 'parentUserId']; // added parentUserId to exclude list
-    return Object.keys(jobsData[0]).filter(key => !exclude.includes(key));
+    return [
+      'Applicant Name',
+      'Competence Score',
+      'Skill Score',
+      'Cultural Score',
+      'Overall Score',
+      'Justification',
+      'Contact'
+    ];
   };
 
   const handleEvaluate = (jobId) => {
@@ -269,27 +295,18 @@ function Report() {
                 <thead>
                   <tr>
                     {getHeaders().map(header => (
-                      <th key={header}>
-                        {header.charAt(0).toUpperCase() + header.slice(1).replace(/([A-Z])/g, ' $1')}
-                      </th>
+                      <th key={header}>{header}</th>
                     ))}
-                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {jobsData.map((job, index) => (
-                    <tr key={job.id || index}>
+                  {jobsData.applicationAnalysis?.map((application, index) => (
+                    <tr key={application.applicationId}>
                       {getHeaders().map(header => (
-                        <td key={header}>{formatValue(job[header], header)}</td>
+                        <td key={header}>
+                          {formatValue(application, header)}
+                        </td>
                       ))}
-                      <td>
-                        <button 
-                          className="evaluate-btn"
-                          onClick={() => handleEvaluate(job._id)}
-                        >
-                          Evaluate
-                        </button>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
