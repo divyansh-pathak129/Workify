@@ -126,6 +126,34 @@ function Dashboard() {
     navigate(path);
   };
 
+  const getToastStyle = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return isLight ? {
+      background: 'var(--bg-secondary)',
+      color: 'var(--text-primary)',
+      border: '1px solid var(--border-color)',
+      backdropFilter: 'blur(8px)',
+    } : {
+      background: 'rgba(20, 20, 28, 0.95)',
+      color: 'var(--caribbean-green-100)',
+      border: '1px solid var(--caribbean-green-900)',
+      backdropFilter: 'blur(8px)',
+    };
+  };
+
+  const getToastSuccessStyle = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return isLight ? {
+      background: 'rgba(0, 208, 163, 0.1)',
+      border: '1px solid var(--caribbean-green-300)',
+      color: 'var(--caribbean-green-800)',
+    } : {
+      background: 'rgba(0, 208, 163, 0.15)',
+      border: '1px solid var(--caribbean-green-600)',
+      color: 'var(--caribbean-green-200)',
+    };
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -271,20 +299,13 @@ function Dashboard() {
         toastOptions={{
           duration: 3000,
           style: {
-            background: 'var(--bg-secondary)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border-color)',
-            backdropFilter: 'blur(8px)',
+            ...getToastStyle(),
             fontSize: '0.95rem',
             fontFamily: 'Poppins, sans-serif',
             padding: '12px 20px',
           },
           success: {
-            style: {
-              background: 'rgba(0, 208, 163, 0.1)',
-              border: '1px solid var(--caribbean-green-300)',
-              color: 'var(--caribbean-green-800)',
-            },
+            style: getToastSuccessStyle(),
             iconTheme: {
               primary: 'var(--caribbean-green-600)',
               secondary: 'var(--bg-card)',
