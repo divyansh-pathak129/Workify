@@ -25,8 +25,6 @@ function Dashboard() {
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const [tempTheme, setTempTheme] = useState(isDarkTheme);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,26 +99,6 @@ function Dashboard() {
   const handleSettingsClick = (e) => {
     e.preventDefault();
     setIsSettingsOpen(true);
-  };
-
-  // Update theme effect
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setIsDarkTheme(savedTheme === 'dark');
-    setTempTheme(savedTheme === 'dark');
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
-
-  const handleThemeToggle = () => {
-    setTempTheme(!tempTheme);
-  };
-
-  const handleSaveSettings = () => {
-    setIsDarkTheme(tempTheme);
-    localStorage.setItem('theme', tempTheme ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', tempTheme ? 'dark' : 'light');
-    setIsSettingsOpen(false);
-    toast.success('Settings saved successfully!');
   };
 
   return (
@@ -238,18 +216,15 @@ function Dashboard() {
                   <input 
                     type="checkbox"
                     id="theme-switch"
-                    checked={tempTheme}
-                    onChange={handleThemeToggle}
+                    checked={false}
+                    onChange={() => {}}
                   />
                   <label htmlFor="theme-switch">
                     <span className="toggle-track"></span>
-                    <span className="toggle-label">{tempTheme ? 'Dark' : 'Light'}</span>
+                    <span className="toggle-label">Dark</span>
                   </label>
                 </div>
               </div>
-              <button className="settings-save-btn" onClick={handleSaveSettings}>
-                Save Changes
-              </button>
             </div>
           </div>
         </div>
