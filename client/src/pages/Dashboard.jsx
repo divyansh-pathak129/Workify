@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate, useParams} from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import './Dashboard.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
@@ -23,7 +23,9 @@ function Dashboard() {
   const { id } = useParams();
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const navigate = useNavigate();
+  const location = useLocation();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -89,6 +91,16 @@ function Dashboard() {
     }
   };
 
+  const isActivePath = (path) => {
+    return location.pathname === path || 
+           (path === `/dashboard/${id}` && location.pathname === `/dashboard/${id}`);
+  };
+
+  const handleSettingsClick = (e) => {
+    e.preventDefault();
+    setIsSettingsOpen(true);
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -96,7 +108,15 @@ function Dashboard() {
           <h2 className="highlight">Workify</h2>
         </div>
         <div className='dashboard-sidebar-middle'>
-          {/* Navigation items will go here */}
+          <div className={`nav-card ${isActivePath(`/dashboard/${id}`) ? 'active' : ''}`}>
+            <Link to={`/dashboard/${id}`}>Home</Link>
+          </div>
+          <div className="nav-card" onClick={handleSettingsClick}>
+            <a href="#">Settings</a>
+          </div>
+          <div className="nav-card job-posts-btn">
+            <Link to="/job-posts">Create Job Post</Link>
+          </div>
         </div>
         <div className='dashboard-sidebar-bottom'>
           <div 
@@ -185,6 +205,33 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      {isSettingsOpen && (
+        <div className="settings-overlay" onClick={() => setIsSettingsOpen(false)}>
+          <div className="settings-card" onClick={e => e.stopPropagation()}>
+            <div className="settings-header">
+              <h3>Settings</h3>
+              <button className="close-btn" onClick={() => setIsSettingsOpen(false)}>×</button>
+            </div>
+            <div className="settings-content">
+              <div className="setting-item">
+                <span>Theme Mode</span>
+                <div className="theme-toggle">
+                  <input 
+                    type="checkbox"
+                    id="theme-switch"
+                    checked={isDarkTheme}
+                    onChange={() => setIsDarkTheme(!isDarkTheme)}
+                  />
+                  <label htmlFor="theme-switch">
+                    <span className="toggle-track"></span>
+                    <span className="toggle-label">{isDarkTheme ? 'Dark' : 'Light'}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Toaster
         position="bottom-right"
         toastOptions={{
