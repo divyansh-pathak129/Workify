@@ -5,11 +5,12 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Report from './pages/Report'
 
 function App() {
   return (
     <Routes>
-      <Route path="/report" element={<Login />} />
+      <Route path="/report" element={<Report />} />
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />
