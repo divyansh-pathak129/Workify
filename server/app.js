@@ -58,6 +58,13 @@ io.on('connection', (socket) => {
         socket.emit("report", report)
     })
 
+    socket.on("fetchApplications", async (applicationIds) => {
+        const data = await applicationData(applicationIds);
+        if(data.status === "ok"){
+            socket.emit("applicationsData", data);
+        }
+    });
+
 })
 
 

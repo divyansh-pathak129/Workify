@@ -157,10 +157,24 @@ async function getRawData (jobId) {
   }
 }
 
-async function applicationData(applicationArray) {
+async function applicationData(applicationIds) {
+  try {
+    const database = client.db("application-data");
+    const collection = database.collection("applications");
+    
+    const promises = applicationIds.map(id => {
+      if (typeof id !== "string" || id.length !== 24) return Promise.resolve(null);
+      return collection.findOne({ _id: new ObjectId(id) });
+    });
 
-   
-  
+    const applicationDocs = await Promise.all(promises);
+    const applications = applicationDocs.filter(app => app !== null);
+    
+    return {status: "ok", content: applications};
+  } catch (error) {
+    console.error("Error in applicationData:", error);
+    return {status: "error", message: "Database error"};
+  }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData};
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData};
