@@ -76,7 +76,15 @@ function Dashboard() {
           {/* Navigation items will go here */}
         </div>
         <div className='dashboard-sidebar-bottom'>
-          {/* User profile/logout will go here */}
+          <div className="profile-card">
+            <div className="profile-avatar">
+              {userData.name ? userData.name[0].toUpperCase() : 'U'}
+            </div>
+            <div className="profile-info">
+              <h3>{userData.name}</h3>
+              <p>{userData.email || 'user@workify.com'}</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className='dashboard-content'>
@@ -85,7 +93,7 @@ function Dashboard() {
             <h1>Welcome Back, {userData.name}</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            {/* Add your header actions here */}
+            <button className="new-post-btn">Create Job Post</button>
           </div>
         </div>
         <div className='dashboard-content-body'>

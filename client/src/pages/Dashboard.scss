@@ -50,6 +50,67 @@
   padding: 24px;
 }
 
+.dashboard-sidebar-bottom {
+  padding: 24px;
+  margin-top: auto; // Push to bottom
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  .profile-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(30, 30, 47, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(30, 30, 47, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--caribbean-green-500);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 1.2rem;
+    }
+
+    .profile-info {
+      flex: 1;
+      min-width: 0; // Prevents text overflow
+
+      h3 {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--caribbean-green-100);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #b9b9c3;
+        opacity: 0.8;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
 .dashboard-content {
   flex: 1;
   background: #0E0E11;
@@ -83,6 +144,28 @@
       margin-top: 4px;
       max-width: 100%;  
       transition: width 0.3s ease;  
+    }
+  }
+
+  .dashboard-content-header-right {
+    .new-post-btn {
+      background: rgba(23, 227, 178, 0.1);
+      color: var(--caribbean-green-400);
+      border: 1px solid var(--caribbean-green-600);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Poppins', sans-serif;
+
+      &:hover {
+        background: var(--caribbean-green-500);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+      }
     }
   }
 }
