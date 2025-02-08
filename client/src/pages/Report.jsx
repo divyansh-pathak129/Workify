@@ -20,7 +20,7 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
-  const [reportData, setReportData] = useState({ applicationAnalysis: [] });
+  const [reportData, setReportData] = useState({});
   const { id, jobId } = useParams(); // Add jobId from params
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -29,14 +29,16 @@ function Report() {
   const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
+  // socket.on("report", (content) => {
+  //     const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
+  //     setReportData(parsedContent);
+  //     console.log(parsedContent);
+  //   });
+
   socket.on("report", (content) => {
-    try {
-      const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
-      setReportData(parsedContent);
-    } catch (error) {
-      console.error("Error parsing report data:", error);
-    }
-  });
+    setReportData(JSON.parse(content));
+    console.log("This is the main content for the report: ", JSON.parse(content));
+  })
 
   useEffect(() => {
     // Fetch report data when component mounts

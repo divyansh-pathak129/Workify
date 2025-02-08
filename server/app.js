@@ -63,15 +63,12 @@ io.on('connection', (socket) => {
             console.log('Evaluating job:', jobId);
             const jobData = await getRawData(jobId);
             const applicationsData = await applicationData(jobData.applications);
-        const prompt = await generatePrompt(jobData, applicationsData);
+            const prompt = await generatePrompt(jobData, applicationsData);
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const analysisText = await result.response.text();
-            console.log("Analysis:", analysisText);
-            socket.emit("report", {
-                status: "ok",
-                analysis: analysisText
-            });
+            console.log(analysisText);
+            socket.emit("report", analysisText);
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
             socket.emit("error", { 

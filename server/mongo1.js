@@ -209,7 +209,7 @@ async function generatePrompt(jobData, applicationsData) {
     `).join('\n')}
     
     Give every application 0 if the application is not relevant to the job posting or the application that are  incomplete or feel like jibberish., 
-    Provide your analysis in the following strict JSON format with no additional text also dont put any backticks it should be a valid JSON object:
+    Provide your analysis in the following strict JSON format with no additional text also dont put any backticks it should be a valid JSON object and Analysis::
     {
       "applicationAnalysis": [
         {
@@ -243,6 +243,7 @@ async function generatePrompt(jobData, applicationsData) {
     }
 
     Return ONLY the JSON object with no additional text or explanation. Ensure the response is valid JSON that can be parsed directly.
+    Also dont put any backticks and it should be a valid JSON object, also dont put 
     `;
 
     return prompt;
