@@ -122,6 +122,10 @@ function Dashboard() {
     setIsSettingsOpen(true);
   };
 
+  const handleNavClick = (path) => {
+    navigate(path);
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -129,13 +133,22 @@ function Dashboard() {
           <h2 className="highlight">Workify</h2>
         </div>
         <div className='dashboard-sidebar-middle'>
-          <div className={`nav-card ${isActivePath(`/dashboard/${id}`) ? 'active' : ''}`}>
+          <div 
+            className={`nav-card ${isActivePath(`/dashboard/${id}`) ? 'active' : ''}`}
+            onClick={() => handleNavClick(`/dashboard/${id}`)}
+          >
             <Link to={`/dashboard/${id}`}>Home</Link>
           </div>
-          <div className="nav-card" onClick={handleSettingsClick}>
+          <div 
+            className="nav-card" 
+            onClick={handleSettingsClick}
+          >
             <a href="#">Settings</a>
           </div>
-          <div className="nav-card job-posts-btn">
+          <div 
+            className="nav-card job-posts-btn"
+            onClick={() => handleNavClick("/job-posts")}
+          >
             <Link to="/job-posts">Create Job Post</Link>
           </div>
         </div>
