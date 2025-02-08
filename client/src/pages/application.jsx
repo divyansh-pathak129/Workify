@@ -41,19 +41,18 @@ const ApplicationForm = () => {
       linkedin: '',
       github: ''
     },
-    associatedWords: [],
-    resume: null
+    associatedWords: []
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fileName, setFileName] = useState('');
 
-  // Load demo data for development
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      setFormData(demoData);
-    }
-  }, []);
+  // Remove the demo data loading
+  // useEffect(() => {
+  //   if (process.env.NODE_ENV === 'development') {
+  //     setFormData(demoData);
+  //   }
+  // }, []);
 
   const handleChange = (e, section, field, index) => {
     const { value } = e.target;
