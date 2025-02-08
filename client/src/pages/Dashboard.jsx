@@ -36,9 +36,20 @@ function Dashboard() {
     setJobsData(data.content)
   })
 
-  const formatValue = (value) => {
+  const formatValue = (value, field) => {
+    if (field === 'dateOfCreation') {
+      return new Date(value).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    }
+    if (field === 'applications') {
+      if (!Array.isArray(value)) return '0';
+      const uniqueApps = new Set(value);
+      return uniqueApps.size.toString();
+    }
     if (typeof value === 'boolean') return value ? 'Yes' : 'No';
-    if (value instanceof Date) return value.toLocaleDateString();
     if (Array.isArray(value)) return value.join(', ');
     if (value === undefined || value === null) return '-';
     return value;
@@ -46,7 +57,7 @@ function Dashboard() {
 
   const getHeaders = () => {
     if (jobsData.length === 0) return [];
-    const exclude = ['id', '_id']; // fields to exclude from table
+    const exclude = ['id', '_id', 'parentUserId']; // added parentUserId to exclude list
     return Object.keys(jobsData[0]).filter(key => !exclude.includes(key));
   };
 
@@ -78,6 +89,7 @@ function Dashboard() {
               <table className="dashboard-table">
                 <thead>
                   <tr>
+                    <th>Sr No.</th>
                     {getHeaders().map(header => (
                       <th key={header}>
                         {header.charAt(0).toUpperCase() + header.slice(1).replace(/([A-Z])/g, ' $1')}
@@ -88,8 +100,9 @@ function Dashboard() {
                 <tbody>
                   {jobsData.map((job, index) => (
                     <tr key={job.id || index}>
+                      <td>{index + 1}</td>
                       {getHeaders().map(header => (
-                        <td key={header}>{formatValue(job[header])}</td>
+                        <td key={header}>{formatValue(job[header], header)}</td>
                       ))}
                     </tr>
                   ))}
