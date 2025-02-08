@@ -51,4 +51,31 @@ io.on("connection", (socket) => {
       });
     }
   });
+
+  socket.on("fetchReport", async (jobId) => {
+    try {
+      const database = client.db("application-data");
+      const collection = database.collection("reportsData");
+      
+      const report = await collection.findOne({ jobId: jobId });
+      
+      if (report) {
+        socket.emit("report", {
+          status: "ok",
+          content: report
+        });
+      } else {
+        socket.emit("report", {
+          status: "error",
+          message: "No report found for this job"
+        });
+      }
+    } catch (error) {
+      console.error("Error in fetchReport:", error);
+      socket.emit("report", {
+        status: "error",
+        message: "Failed to fetch report"
+      });
+    }
+  });
 });

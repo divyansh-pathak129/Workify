@@ -3,7 +3,6 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import './Report.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
-import demoData from '../assets/repsonseDemoData.json';
 
 // Add Poppins font import
 const poppinsFont = document.createElement('link');
@@ -21,8 +20,8 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
-  const [reportData, setReportData] = useState(demoData); // Initialize with demo data
-  const { id } = useParams();
+  const [reportData, setReportData] = useState({ applicationAnalysis: [] });
+  const { id, jobId } = useParams(); // Add jobId from params
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
@@ -40,22 +39,29 @@ function Report() {
   });
 
   useEffect(() => {
-    // Add demo data immediately while waiting for socket
-    setReportData(demoData);
+    // Fetch report data when component mounts
+    if (jobId) {
+      socket.emit("fetchReport", jobId);
+    }
 
-    socket.on("report", (content) => {
+    // Socket event listeners
+    const handleReportData = (content) => {
       try {
         const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
         setReportData(parsedContent);
       } catch (error) {
         console.error("Error parsing report data:", error);
-        // Fallback to demo data if parsing fails
-        setReportData(demoData);
+        toast.error('Error loading report data');
       }
-    });
+    };
 
-    return () => socket.off("report");
-  }, []);
+    socket.on("report", handleReportData);
+
+    // Cleanup
+    return () => {
+      socket.off("report", handleReportData);
+    };
+  }, [jobId]);
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -182,10 +188,10 @@ function Report() {
   const calculateReportMetrics = () => {
     const applications = reportData.applicationAnalysis || [];
     const avgScores = applications.reduce((acc, app) => {
-      acc.competence += app.competenceScore;
-      acc.skill += app.skillScore;
-      acc.cultural += app.culturalScore;
-      acc.overall += app.overallScore;
+      acc.competence += app.competenceScore || 0;
+      acc.skill += app.skillScore || 0;
+      acc.cultural += app.culturalScore || 0;
+      acc.overall += app.overallScore || 0;
       return acc;
     }, { competence: 0, skill: 0, cultural: 0, overall: 0 });
 
@@ -308,9 +314,11 @@ function Report() {
             <h1>Report</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={() => toast("Coming Soon!")}>Create Job Post</button>
+            <button className="new-post-btn" onClick={() => toast("Coming Soon!")}>
+              Create Job Post
+            </button>
           </div>
-        </div>
+        </div> {/* Added missing closing tag */}
         <div className='dashboard-content-body'>
           <div className="report-box">
             <h3 className="report-title">Application Analytics</h3>
