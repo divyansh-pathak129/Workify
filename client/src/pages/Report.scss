@@ -685,3 +685,104 @@
     transform: translateY(0);
   }
 }
+
+// Import the base styles
+@import './Dashboard.scss';
+
+// Additional Report-specific styles
+.report-box {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color);
+  
+  .report-title {
+    color: var(--caribbean-green-400);
+    margin-bottom: 20px;
+  }
+
+  .report-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+
+    .metric {
+      padding: 16px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+
+      .metric-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .metric-value {
+        font-size: 1.5rem;
+        color: var(--caribbean-green-400);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// Light theme overrides for Report page
+[data-theme="light"] {
+  .report-box {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 2px 8px var(--shadow-color) !important;
+
+    .report-title {
+      color: var(--caribbean-green-800) !important;
+    }
+
+    .report-content {
+      .metric {
+        background: var(--bg-secondary) !important;
+        border-color: var(--border-color) !important;
+
+        .metric-label {
+          color: var(--text-secondary) !important;
+        }
+
+        .metric-value {
+          color: var(--caribbean-green-700) !important;
+        }
+
+        &:hover {
+          border-color: var(--caribbean-green-300) !important;
+          box-shadow: 0 4px 12px rgba(0, 208, 163, 0.1) !important;
+        }
+      }
+    }
+  }
+
+  // Override table styles specifically for report page
+  .dashboard-table {
+    tbody tr {
+      &:hover {
+        background-color: rgba(0, 208, 163, 0.05) !important;
+        
+        td {
+          color: var(--caribbean-green-900) !important;
+        }
+      }
+    }
+
+    .evaluate-btn {
+      background: var(--caribbean-green-50) !important;
+      color: var(--caribbean-green-800) !important;
+      border: 1px solid var(--caribbean-green-300) !important;
+
+      &:hover {
+        background: var(--caribbean-green-600) !important;
+        color: white !important;
+        border-color: var(--caribbean-green-600) !important;
+      }
+    }
+  }
+}

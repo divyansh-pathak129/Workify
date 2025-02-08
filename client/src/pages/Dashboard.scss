@@ -75,6 +75,24 @@
     td {
       color: var(--text-primary);
     }
+
+    tbody tr {
+      &:hover {
+        background-color: rgba(0, 208, 163, 0.05) !important;
+        td {
+          color: var(--caribbean-green-900) !important;
+        }
+      }
+    }
+
+    td {
+      border-color: var(--border-color) !important;
+    }
+
+    .table-wrapper {
+      background-color: var(--bg-card) !important;
+      box-shadow: 0 2px 8px var(--shadow-color) !important;
+    }
   }
 
   // Text colors
@@ -98,6 +116,343 @@
     &:hover {
       background: var(--caribbean-green-600);
       color: white;
+    }
+  }
+
+  // Professional header style
+  .dashboard-content-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    
+    h1 {
+      color: var(--caribbean-green-800);
+      &::after {
+        background: var(--caribbean-green-600);
+      }
+    }
+  }
+
+  // Navigation cards
+  .nav-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+
+    a {
+      color: var(--caribbean-green-800);
+    }
+
+    &:hover {
+      background: #f8f9fa;
+      border-color: var(--caribbean-green-400);
+      box-shadow: 0 4px 12px rgba(0, 208, 163, 0.1);
+    }
+
+    &.active {
+      background: rgba(0, 208, 163, 0.05);
+      border-color: var(--caribbean-green-400);
+
+      a {
+        color: var(--caribbean-green-700);
+      }
+    }
+  }
+
+  // Profile card
+  .profile-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .profile-avatar {
+      background: var(--caribbean-green-600);
+    }
+
+    h3 {
+      color: var(--caribbean-green-800);
+    }
+
+    .profile-detail {
+      span {
+        color: var(--caribbean-green-700);
+      }
+      strong {
+        color: var(--text-primary);
+      }
+    }
+
+    &.expanded {
+      background: #f8f9fa;
+    }
+
+    .profile-info {
+      h3 {
+        color: var(--caribbean-green-900) !important;
+        font-weight: 600 !important;
+      }
+
+      p {
+        color: var(--text-primary) !important;
+        opacity: 1 !important;
+      }
+
+      .profile-detail {
+        span {
+          color: var(--caribbean-green-800) !important;
+          font-weight: 500 !important;
+        }
+
+        strong {
+          color: var(--text-primary) !important;
+          opacity: 0.9 !important;
+        }
+      }
+
+      .profile-expanded {
+        border-top-color: var(--border-color) !important;
+      }
+    }
+  }
+
+  // Buttons
+  .evaluate-btn,
+  .new-post-btn {
+    background: #ffffff;
+    color: var(--caribbean-green-700);
+    border: 1px solid var(--caribbean-green-300);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      background: var(--caribbean-green-600);
+      color: white;
+      border-color: var(--caribbean-green-600);
+      box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+    }
+  }
+
+  // Settings modal
+  .settings-overlay {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .settings-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+    .settings-header {
+      border-bottom: 1px solid #e9ecef;
+      h3 {
+        color: var(--caribbean-green-800);
+      }
+    }
+
+    .setting-item span {
+      color: var(--text-primary);
+    }
+  }
+
+  // Update base colors with darker shades for better contrast
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-hover: #f5f5f5;
+  --border-color: #e0e0e0;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  
+  // Override any existing button styles with !important
+  .nav-card, 
+  .evaluate-btn,
+  .new-post-btn,
+  .settings-save-btn {
+    background-color: #ffffff !important;
+    color: var(--caribbean-green-800) !important;
+    border: 1px solid var(--caribbean-green-600) !important;
+
+    &:hover {
+      background-color: var(--caribbean-green-700) !important;
+      color: white !important;
+      border-color: var(--caribbean-green-700) !important;
+    }
+
+    &.active {
+      background-color: var(--caribbean-green-50) !important;
+      border-color: var(--caribbean-green-600) !important;
+      color: var(--caribbean-green-800) !important;
+    }
+  }
+
+  // Make text colors darker for better visibility
+  .highlight,
+  h1, h2, h3 {
+    color: var(--caribbean-green-900) !important;
+  }
+
+  // Update form highlight section
+  .highlight-section {
+    background-color: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+  }
+
+  // Table styles
+  .dashboard-table {
+    th {
+      color: var(--caribbean-green-900) !important;
+      background-color: var(--bg-secondary) !important;
+    }
+
+    td {
+      color: var(--text-primary) !important;
+    }
+  }
+
+  // Profile and settings
+  .profile-card {
+    background-color: var(--bg-card) !important;
+    
+    .profile-avatar {
+      background-color: var(--caribbean-green-700) !important;
+    }
+
+    h3 {
+      color: var(--caribbean-green-900) !important;
+    }
+
+    .profile-detail span {
+      color: var(--caribbean-green-800) !important;
+    }
+  }
+
+  // Header section
+  .dashboard-content-header {
+    background-color: var(--bg-secondary) !important;
+    
+    h1 {
+      color: var(--caribbean-green-900) !important;
+      
+      &::after {
+        background-color: var(--caribbean-green-700) !important;
+      }
+    }
+  }
+
+  // Navigation buttons with higher specificity
+  .dashboard-sidebar .dashboard-sidebar-middle {
+    .nav-card {
+      background-color: #ffffff !important;
+      border: 1px solid var(--caribbean-green-300) !important;
+      color: var(--caribbean-green-800) !important;
+
+      a {
+        color: var(--caribbean-green-800) !important;
+      }
+
+      &:hover {
+        background-color: var(--caribbean-green-600) !important;
+        border-color: var(--caribbean-green-600) !important;
+        
+        a {
+          color: white !important;
+        }
+      }
+
+      &.active {
+        background-color: var(--caribbean-green-100) !important;
+        border-color: var(--caribbean-green-600) !important;
+        
+        a {
+          color: var(--caribbean-green-900) !important;
+        }
+
+        &:hover {
+          background-color: var(--caribbean-green-600) !important;
+          a {
+            color: white !important;
+          }
+        }
+      }
+    }
+
+    // Match create job post button style
+    .job-posts-btn {
+      background-color: rgba(0, 208, 163, 0.1) !important;
+      border: 1px solid var(--caribbean-green-600) !important;
+
+      a {
+        color: var(--caribbean-green-800) !important;
+      }
+
+      &:hover {
+        background-color: var(--caribbean-green-600) !important;
+        border-color: var(--caribbean-green-600) !important;
+        
+        a {
+          color: white !important;
+        }
+      }
+    }
+  }
+
+  // Update top bar button to match
+  .dashboard-content-header {
+    .new-post-btn {
+      background-color: rgba(0, 208, 163, 0.1) !important;
+      color: var(--caribbean-green-800) !important;
+      border: 1px solid var(--caribbean-green-600) !important;
+
+      &:hover {
+        background-color: var(--caribbean-green-600) !important;
+        color: white !important;
+      }
+    }
+  }
+
+  // Override any conflicting styles
+  .nav-card,
+  .evaluate-btn,
+  .new-post-btn {
+    &, &:hover, &:active {
+      transition: all 0.2s ease !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2) !important;
+      transform: translateY(-2px) !important;
+    }
+  }
+
+  // Table hover styles
+  .dashboard-table {
+    background: var(--bg-card) !important;
+    
+    tbody tr {
+      &:hover {
+        background-color: rgba(0, 208, 163, 0.05) !important;
+        td {
+          color: var(--caribbean-green-900) !important;
+        }
+      }
+    }
+
+    td {
+      border-color: var(--border-color) !important;
+    }
+
+    .table-wrapper {
+      background-color: var(--bg-card) !important;
+      box-shadow: 0 2px 8px var(--shadow-color) !important;
+    }
+  }
+
+  // Card hover effect
+  .card {
+    &:hover {
+      background: var(--bg-card) !important;
+      border-color: var(--caribbean-green-200) !important;
+      box-shadow: 0 8px 24px rgba(0, 208, 163, 0.1) !important;
     }
   }
 }

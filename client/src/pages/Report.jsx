@@ -25,6 +25,7 @@ function Report() {
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   useEffect(() => {
@@ -46,14 +47,20 @@ function Report() {
     // Load saved theme preference
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setIsDarkTheme(savedTheme === 'dark');
+    setTempTheme(savedTheme === 'dark');
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
   const handleThemeToggle = () => {
-    const newTheme = !isDarkTheme;
-    setIsDarkTheme(newTheme);
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
+    setTempTheme(!tempTheme);
+  };
+
+  const handleSaveSettings = () => {
+    setIsDarkTheme(tempTheme);
+    localStorage.setItem('theme', tempTheme ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', tempTheme ? 'dark' : 'light');
+    setIsSettingsOpen(false);
+    toast.success('Theme settings saved!');
   };
 
   const formatValue = (value, field) => {
@@ -254,15 +261,18 @@ function Report() {
                   <input 
                     type="checkbox"
                     id="theme-switch"
-                    checked={isDarkTheme}
-                    onChange={() => setIsDarkTheme(!isDarkTheme)}
+                    checked={tempTheme}
+                    onChange={handleThemeToggle}
                   />
                   <label htmlFor="theme-switch">
                     <span className="toggle-track"></span>
-                    <span className="toggle-label">{isDarkTheme ? 'Dark' : 'Light'}</span>
+                    <span className="toggle-label">{tempTheme ? 'Dark' : 'Light'}</span>
                   </label>
                 </div>
               </div>
+              <button className="settings-save-btn" onClick={handleSaveSettings}>
+                Save Changes
+              </button>
             </div>
           </div>
         </div>

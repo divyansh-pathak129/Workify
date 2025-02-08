@@ -271,9 +271,9 @@ function Dashboard() {
         toastOptions={{
           duration: 3000,
           style: {
-            background: 'rgba(20, 20, 28, 0.95)',
-            color: 'var(--caribbean-green-100)',
-            border: '1px solid var(--caribbean-green-900)',
+            background: 'var(--bg-secondary)',
+            color: 'var(--text-primary)',
+            border: '1px solid var(--border-color)',
             backdropFilter: 'blur(8px)',
             fontSize: '0.95rem',
             fontFamily: 'Poppins, sans-serif',
@@ -281,20 +281,20 @@ function Dashboard() {
           },
           success: {
             style: {
-              background: 'rgba(0, 208, 163, 0.15)',
-              border: '1px solid var(--caribbean-green-600)',
-              color: 'var(--caribbean-green-200)',
+              background: 'rgba(0, 208, 163, 0.1)',
+              border: '1px solid var(--caribbean-green-300)',
+              color: 'var(--caribbean-green-800)',
             },
             iconTheme: {
-              primary: 'var(--caribbean-green-400)',
-              secondary: 'rgba(20, 20, 28, 0.95)',
+              primary: 'var(--caribbean-green-600)',
+              secondary: 'var(--bg-card)',
             },
           },
           error: {
             style: {
-              background: 'rgba(255, 86, 86, 0.15)',
+              background: 'rgba(255, 86, 86, 0.1)',
               border: '1px solid rgba(255, 86, 86, 0.4)',
-              color: '#ffa6a6',
+              color: '#ff5b5b',
             },
           },
         }}
