@@ -3,6 +3,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import './Report.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
+import demoData from '../assets/repsonseDemoData.json';
 
 // Add Poppins font import
 const poppinsFont = document.createElement('link');
@@ -20,7 +21,7 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
-  const [reportData, setReportData] = useState({ applicationAnalysis: [] });
+  const [reportData, setReportData] = useState(demoData);
   const { id, jobId } = useParams(); // Add jobId from params
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -39,29 +40,26 @@ function Report() {
   });
 
   useEffect(() => {
-    // Fetch report data when component mounts
-    if (jobId) {
-      socket.emit("fetchReport", jobId);
-    }
+    // Initialize with demo data
+    setReportData(demoData);
 
-    // Socket event listeners
-    const handleReportData = (content) => {
+    // Still listen for socket updates but fallback to demo data
+    socket.on("report", (content) => {
       try {
         const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
-        setReportData(parsedContent);
+        if (parsedContent && parsedContent.applicationAnalysis) {
+          setReportData(parsedContent);
+        } else {
+          setReportData(demoData);
+        }
       } catch (error) {
         console.error("Error parsing report data:", error);
-        toast.error('Error loading report data');
+        setReportData(demoData);
       }
-    };
+    });
 
-    socket.on("report", handleReportData);
-
-    // Cleanup
-    return () => {
-      socket.off("report", handleReportData);
-    };
-  }, [jobId]);
+    return () => socket.off("report");
+  }, []);
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -188,10 +186,10 @@ function Report() {
   const calculateReportMetrics = () => {
     const applications = reportData.applicationAnalysis || [];
     const avgScores = applications.reduce((acc, app) => {
-      acc.competence += app.competenceScore || 0;
-      acc.skill += app.skillScore || 0;
-      acc.cultural += app.culturalScore || 0;
-      acc.overall += app.overallScore || 0;
+      acc.competence += app.competenceScore;
+      acc.skill += app.skillScore;
+      acc.cultural += app.culturalScore;
+      acc.overall += app.overallScore;
       return acc;
     }, { competence: 0, skill: 0, cultural: 0, overall: 0 });
 
