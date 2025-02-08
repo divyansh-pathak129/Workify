@@ -300,14 +300,6 @@ function Report() {
           },
         }}
       />
-      <div className="theme-toggle-wrapper">
-        <button 
-          className="theme-toggle-btn"
-          onClick={handleThemeToggle}
-        >
-          {isDarkTheme ? '☀️' : '🌙'}
-        </button>
-      </div>
     </div>
   );
 }
