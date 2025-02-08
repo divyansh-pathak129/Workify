@@ -1,113 +1,94 @@
-  const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-  const uri = "mongodb+srv://divyanshpathak129:qxyUYuq8ylKsc9FN@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
-  const { getClient, closeClient, releaseClient } = require('./clientChecker.js');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const uri = "mongodb+srv://divyanshpathak129:qxyUYuq8ylKsc9FN@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
+const { getClient, closeClient, releaseClient } = require('./clientChecker.js');
 
+// Create a MongoClient instance
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
-  const client = new MongoClient(uri, {
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      }
+// Connect to MongoDB once
+async function connectToMongo() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    throw error;
+  }
+}
+
+// Initialize connection
+connectToMongo();
+
+async function fetchUserData(id) {
+  try {
+    const database = client.db('application-data');
+    const collection = database.collection('userData');
+    const mainId = new ObjectId(id);
+    const query = { _id: mainId };
+    const user = await collection.findOne(query);
+    if(user){
+      return {status: "ok", message: "Login Successful", content: user};
+    }
+    return {status: "error", message: "Invalid Credentials"};
+  } catch (error) {
+    console.error("Error in fetchUserData:", error);
+    return {status: "error", message: "Database error"};
+  }
+}
+
+async function login({credentials}) {
+  try {
+    const database = client.db('application-data');
+    const collection = database.collection('userData');
+    const query = { name: credentials.username };
+    const user = await collection.findOne(query);
+    
+    if(user && user.password === credentials.password){
+      return {status: "ok", message: "Login Successful", content: user};
+    }
+    return {status: "error", message: "Invalid Credentials"};
+  } catch (error) {
+    console.error("Error in login:", error);
+    return {status: "error", message: "Database error"};
+  }
+}
+
+async function fetchJobs(requestIds) {
+  try {
+    const database = client.db("application-data");
+    const collection = database.collection("jobsData");
+    
+    const promises = requestIds.map(id => {
+      if (typeof id !== "string" || id.length !== 24) return Promise.resolve(null);
+      return collection.findOne({ _id: new ObjectId(id) });
     });
 
-
-
-  async function fetchUserData(id) {
-
-      let client = await getClient();
-      try {
-          const database = client.db('application-data');
-          const collection = database.collection('userData');
-          const mainId = new ObjectId(id);
-          const query = { _id: mainId };
-          const user = await collection.findOne(query);
-          if(user){
-              return {status: "ok", message: "Login Successful", content: user};
-          }
-          else{
-              return {status: "error", message: "Invalid Credentials"};
-          }
-        } finally {
-        releaseClient();
-        }
-
+    const jobDocs = await Promise.all(promises);
+    const jobs = jobDocs.filter(job => job !== null);
+    
+    return {status: "ok", content: jobs};
+  } catch (error) {
+    console.error("Error in fetchJobs:", error);
+    return {status: "error", message: "Database error"};
   }
+}
 
-  async function login ({credentials}) {
-    let client = await getClient();
-    try {
-        const database = client.db('application-data');
-        const collection = database.collection('userData');
-        console.log(credentials.username)
-        const query = { name: credentials.username };
-        const user = await collection.findOne(query);
-        console.log(query);
-        console.log(user);
-
-        if(user && user.password === credentials.password){
-          return {status: "ok", message: "Login Successful", content: user};
-        }
-        else{
-          return {status: "error", message: "Invalid Credentials"};
-        }
-      } finally {
-        releaseClient();
-      }
-
+// Clean up on application termination
+process.on('SIGINT', async () => {
+  try {
+    await client.close();
+    console.log('MongoDB connection closed.');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error while closing MongoDB connection:', error);
+    process.exit(1);
   }
+});
 
-  // async function fetchJobs (jobIds) {
-  //   let client = await getClient();
-  //   try {
-  //       const database = client.db('application-data');
-  //       const collection = database.collection('jobsData');
-  //       const query = { _id: { $in: jobIds } };
-  //       const jobs = await collection.find(query).toArray();
-  //       return {status: "ok", content: jobs};
-  //     } finally {
-  //       releaseClient();
-  //     }
-  // }
-
-  async function fetchJobs(requestIds) {
-      const jobs = [];
-      let client;
-      try {
-          client = await getClient();
-          const database = client.db("application-data");
-          const collection = database.collection("jobsData");
-
-          const promises = requestIds.map(id => {
-              if (typeof id !== "string" || id.length !== 24) return Promise.resolve(null);
-              return collection.findOne({ _id: new ObjectId(id) });
-          });
-
-          const jobDocs = await Promise.all(promises);
-          for (const job of jobDocs) {
-              if (!job) continue;
-              // jobs.push({
-              //     position: job.jobPosition,
-              //     id: job._id,
-              //     salary: job.salary ? parseFloat(job.salary) : undefined,
-              //     parentUserId: job.parentUserId ? job.parentUserId.toString() : undefined,
-              //     isOpen: job.isOpen,
-              //     applications: job.applications ? job.applications : [],
-              //     companyValues: job.companyValues ? job.companyValues : [],
-              //     dateOfCreation: job.dateOfCreation ? new Date(job.dateOfCreation).toISOString() : undefined
-              // });
-              jobs.push(job);
-              
-          }
-          return {status: "ok", content: jobs};
-      } catch (error) {
-          console.log(error, "error while fetching jobs data");
-      } finally {
-          if (client) {
-              await closeClient(client);
-              await client.close();
-          }
-      }
-  }
-
-  module.exports = {login, fetchUserData, fetchJobs};
+module.exports = {login, fetchUserData, fetchJobs};

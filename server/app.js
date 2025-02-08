@@ -12,7 +12,6 @@ app.use(cors());
 const server = http.createServer(app)
 const io = new Server(server, {
     cors:{
-        // origin: process.env.CORS_URL,
         origin: '*',
         methods: ["GET", "POST"],
         credentials: true
@@ -21,7 +20,7 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
-    socket.on("login", async (credentials, callback) => {
+    socket.on("login", async (credentials) => {
        if(credentials){
         console.log(credentials);
         const content = await login({credentials});
@@ -46,10 +45,8 @@ io.on('connection', (socket) => {
         const data = await fetchUserData(id);
         console.log(data);
         if(data.status === "ok"){
-            // console.log("Done dune")
             socket.emit("userData", data)
         }
-        // callback(data);
     })
 
 })
