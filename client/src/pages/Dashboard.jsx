@@ -43,8 +43,20 @@ function Dashboard() {
           {/* User profile/logout will go here */}
         </div>
       </div>
-      <div className='dashboard-content-body'>
-       
+      <div className='dashboard-content'>
+        <div className='dashboard-content-header'>
+          <div className='dashboard-content-header-left'>
+            <h1>Welcome Back, {userData.name}</h1>
+          </div>
+          <div className='dashboard-content-header-right'>
+            {/* Add your header actions here */}
+          </div>
+        </div>
+        <div className='dashboard-content-body'>
+          <div className="card">
+            {/* Your dashboard content will go here */}
+          </div>
+        </div>
       </div>
     </div>
   );
