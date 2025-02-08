@@ -1,0 +1,48 @@
+{
+    "general": {
+        "name": "John Doe",
+        "email": "XoE6o@example.com",
+        "phone": "555-555-5555"
+    },
+    "education": {
+        "school": "University of California, Berkeley",
+        "degree": "Bachelor's",
+        "field": "Computer Science",
+        "year": 2019
+    },
+    "experience": [
+        {
+            "company": "Google",
+            "position": "Software Engineer",
+            "year": 2019
+        },
+        {
+            "company": "Facebook",
+            "position": "Software Engineer",
+            "year": 2020
+        }
+    ],
+    "skills": [
+        "Java",
+        "Python",
+        "JavaScript",
+        "React",
+        "Node.js"
+    ],
+    "notes": "I am a software engineer with 2 years of experience in the tech industry. I am passionate about building scalable and reliable software systems.",
+    "achievements": [
+        "Developed a scalable web application using React and Node.js",
+        "Optimized the performance of a web application by 50%",
+        "Led a team of 5 engineers to deliver a project on time and within budget"
+    ],
+    "links": {
+        "linkedin": "https://www.linkedin.com/in/johndoe",
+        "github": "https://github.com/johndoe"
+    },
+    "associatedWords": [
+        "Reliable",
+        "Performance Optimization",
+        "Team Leadership"
+    ]
+}
+

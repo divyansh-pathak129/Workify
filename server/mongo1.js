@@ -168,12 +168,36 @@ async function applicationData (applicationIds) {
     });
 
     const applicationDocs = await Promise.all(promises);
-    const applications = applicationDocs.filter(app => app !== null);
-    
-    return applications;
+    const applications = applicationDocs.filter(application => application !== null);
+    return {
+      status: "ok",
+      content: applications
+    };
   } catch (error) {
     console.error("Error in applicationData:", error);
     return {status: "error", message: "Database error"};
+  }
+}
+
+async function generatePrompt (jobData, applicationData) {
+  try {
+    const prompt = `Analyze this job posting and provide a detailed report:
+    
+    Title: ${jobData.title}
+    Description: ${jobData.description}
+    Requirements: ${jobData.requirements}
+    
+    Please provide:
+    1. Overview of the job posting
+    2. Key skills required
+    3. Suggested improvements
+    4. Clarity score (1-10)
+    5. Completeness score (1-10)
+    `;
+    return prompt;
+  } catch (error) {
+    console.error("Error in generatePrompt:", error);
+    return null;
   }
 }
 
