@@ -68,9 +68,8 @@ async function login ({credentials}) {
 
 async function fetchJobs(requestIds) {
     const jobs = [];
-    let client;
+    let client = await getClient();;
     try {
-        client = await getClient();
         const database = client.db("application-data");
         const collection = database.collection("jobsData");
 
