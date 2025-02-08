@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams} from 'react-router-dom';
 import './Dashboard.scss';
 import { io } from 'socket.io-client';
+import {Toaster, toast} from 'react-hot-toast';
 
 // Add Poppins font import
 const poppinsFont = document.createElement('link');
@@ -93,7 +94,7 @@ function Dashboard() {
             <h1>Welcome Back, {userData.name}</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn">Create Job Post</button>
+            <button className="new-post-btn" onClick={() => toast("Coming Soon!")}>Create Job Post</button>
           </div>
         </div>
         <div className='dashboard-content-body'>
@@ -134,6 +135,39 @@ function Dashboard() {
           </div>
         </div>
       </div>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: 'rgba(20, 20, 28, 0.95)',
+            color: 'var(--caribbean-green-100)',
+            border: '1px solid var(--caribbean-green-900)',
+            backdropFilter: 'blur(8px)',
+            fontSize: '0.95rem',
+            fontFamily: 'Poppins, sans-serif',
+            padding: '12px 20px',
+          },
+          success: {
+            style: {
+              background: 'rgba(0, 208, 163, 0.15)',
+              border: '1px solid var(--caribbean-green-600)',
+              color: 'var(--caribbean-green-200)',
+            },
+            iconTheme: {
+              primary: 'var(--caribbean-green-400)',
+              secondary: 'rgba(20, 20, 28, 0.95)',
+            },
+          },
+          error: {
+            style: {
+              background: 'rgba(255, 86, 86, 0.15)',
+              border: '1px solid rgba(255, 86, 86, 0.4)',
+              color: '#ffa6a6',
+            },
+          },
+        }}
+      />
     </div>
   );
 }
