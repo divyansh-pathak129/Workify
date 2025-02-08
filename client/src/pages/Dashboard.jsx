@@ -26,6 +26,7 @@ function Dashboard() {
   },[])
 
   socket.on("userData", (content) => {
+    console.log(content)
     setUserData(content.content)  
   })
 
