@@ -25,6 +25,7 @@ function Report() {
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   socket.on("report", (content) => {
@@ -50,14 +51,20 @@ function Report() {
     // Load saved theme preference
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setIsDarkTheme(savedTheme === 'dark');
+    setTempTheme(savedTheme === 'dark');
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
   const handleThemeToggle = () => {
-    const newTheme = !isDarkTheme;
-    setIsDarkTheme(newTheme);
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
+    setTempTheme(!tempTheme);
+  };
+
+  const handleSaveSettings = () => {
+    setIsDarkTheme(tempTheme);
+    localStorage.setItem('theme', tempTheme ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', tempTheme ? 'dark' : 'light');
+    setIsSettingsOpen(false);
+    toast.success('Theme settings saved!');
   };
 
   const formatValue = (value, field) => {
@@ -125,6 +132,34 @@ function Report() {
       activeJobs: jobsData.filter(job => job.status === 'active').length,
       totalApplications: jobsData.reduce((acc, job) => acc + (job.applications?.length || 0), 0),
       averageApplications: (jobsData.reduce((acc, job) => acc + (job.applications?.length || 0), 0) / jobsData.length || 0).toFixed(2)
+    };
+  };
+
+  const getToastStyle = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return isLight ? {
+      background: 'var(--bg-secondary)',
+      color: 'var(--text-primary)',
+      border: '1px solid var(--border-color)',
+      backdropFilter: 'blur(8px)',
+    } : {
+      background: 'rgba(20, 20, 28, 0.95)',
+      color: 'var(--caribbean-green-100)',
+      border: '1px solid var(--caribbean-green-900)',
+      backdropFilter: 'blur(8px)',
+    };
+  };
+
+  const getToastSuccessStyle = () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return isLight ? {
+      background: 'rgba(0, 208, 163, 0.1)',
+      border: '1px solid var(--caribbean-green-300)',
+      color: 'var(--caribbean-green-800)',
+    } : {
+      background: 'rgba(0, 208, 163, 0.15)',
+      border: '1px solid var(--caribbean-green-600)',
+      color: 'var(--caribbean-green-200)',
     };
   };
 
@@ -258,15 +293,18 @@ function Report() {
                   <input 
                     type="checkbox"
                     id="theme-switch"
-                    checked={isDarkTheme}
-                    onChange={() => setIsDarkTheme(!isDarkTheme)}
+                    checked={tempTheme}
+                    onChange={handleThemeToggle}
                   />
                   <label htmlFor="theme-switch">
                     <span className="toggle-track"></span>
-                    <span className="toggle-label">{isDarkTheme ? 'Dark' : 'Light'}</span>
+                    <span className="toggle-label">{tempTheme ? 'Dark' : 'Light'}</span>
                   </label>
                 </div>
               </div>
+              <button className="settings-save-btn" onClick={handleSaveSettings}>
+                Save Changes
+              </button>
             </div>
           </div>
         </div>
@@ -276,23 +314,16 @@ function Report() {
         toastOptions={{
           duration: 3000,
           style: {
-            background: 'rgba(20, 20, 28, 0.95)',
-            color: 'var(--caribbean-green-100)',
-            border: '1px solid var(--caribbean-green-900)',
-            backdropFilter: 'blur(8px)',
+            ...getToastStyle(),
             fontSize: '0.95rem',
             fontFamily: 'Poppins, sans-serif',
             padding: '12px 20px',
           },
           success: {
-            style: {
-              background: 'rgba(0, 208, 163, 0.15)',
-              border: '1px solid var(--caribbean-green-600)',
-              color: 'var(--caribbean-green-200)',
-            },
+            style: getToastSuccessStyle(),
             iconTheme: {
-              primary: 'var(--caribbean-green-400)',
-              secondary: 'rgba(20, 20, 28, 0.95)',
+              primary: 'var(--caribbean-green-600)',
+              secondary: 'var(--bg-card)',
             },
           },
           error: {
