@@ -19,7 +19,7 @@ function Login() {
  
   socket.on("loginCreds", async (content) => {
     console.log(content);
-    navigate('/dashboard')
+    navigate(`/dashboard/${content.content._id}`)
   })
 
   return (

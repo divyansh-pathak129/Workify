@@ -37,7 +37,10 @@ io.on('connection', (socket) => {
     socket.on("fetchUserData", async (credentials, callback) => {
         const data = await fetchUserData({credentials});
         console.log(data);
-        callback(data);
+        if(data.status === "ok"){
+            socket.emit("userData", data)
+        }
+        // callback(data);
     })
 
     socket.on('disconnect', () => {
