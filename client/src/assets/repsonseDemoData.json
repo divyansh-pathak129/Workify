@@ -1,47 +1,51 @@
 {
   "applicationAnalysis": [
     {
-      "applicationId": "67a75f845c65e303c752fe9c",
-      "applicantName": "John Doe",
-      "applicantEmail": "XoE6o@example.com",
-      "competenceScore": 9,
-      "skillScore": 10,
-      "culturalScore": 8,
-      "overallScore": 9,
-      "justification": "John Doe has a strong educational background and relevant experience in software engineering at leading tech companies. He possesses a comprehensive skillset that aligns well with the requirements. His achievements and notes indicate a passion for building scalable and reliable software systems, which resonates with the company's values of integrity."
+      "applicationId": "app123456",
+      "applicantName": "Sarah Johnson",
+      "applicantEmail": "sarah.j@example.com",
+      "competenceScore": 8.5,
+      "skillScore": 9.0,
+      "culturalScore": 8.8,
+      "overallScore": 8.8,
+      "justification": "Strong technical background with 5 years of relevant experience. Demonstrates excellent problem-solving skills and leadership qualities. Perfect match for the team culture."
     },
     {
-      "applicationId": "67a74fd95c65e303c752fe9b",
-      "applicantName": "John MMDoe",
-      "applicantEmail": "XoE62o@example.com",
-      "competenceScore": 7,
-      "skillScore": 7,
-      "culturalScore": 7,
-      "overallScore": 7,
-      "justification": "John MMDoe has a solid educational background and some experience in software engineering. However, his skillset and experience are not as comprehensive as the first applicant. His achievements and notes are also less specific and do not provide as strong evidence of his qualifications."
+      "applicationId": "app123457",
+      "applicantName": "Michael Chen",
+      "applicantEmail": "m.chen@example.com",
+      "competenceScore": 9.2,
+      "skillScore": 8.5,
+      "culturalScore": 9.0,
+      "overallScore": 8.9,
+      "justification": "Outstanding academic credentials with innovative project portfolio. Shows great collaboration skills and aligns well with company values."
+    },
+    {
+      "applicationId": "app123458",
+      "applicantName": "Emma Davis",
+      "applicantEmail": "emma.d@example.com",
+      "competenceScore": 7.8,
+      "skillScore": 8.2,
+      "culturalScore": 9.5,
+      "overallScore": 8.5,
+      "justification": "Excellent communication skills and team leadership experience. Strong technical foundation with potential for growth."
     }
   ],
   "comparativeAnalysis": [
     {
-      "applicationId": "67a75f845c65e303c752fe9c",
-      "applicantName": "John Doe",
-      "overallScore": 9,
-      "explanation": "John Doe stands out as the top candidate based on his superior qualifications, including education, experience, skills, achievements, and cultural fit with the company's values."
-    },
-    {
-      "applicationId": "67a74fd95c65e303c752fe9b",
-      "applicantName": "John MMDoe",
-      "overallScore": 7,
-      "explanation": "While John MMDoe is a qualified candidate, his overall score is lower than John Doe's due to his less extensive experience, skillset, and cultural alignment."
+      "applicationId": "app123457",
+      "applicantName": "Michael Chen",
+      "overallScore": 8.9,
+      "explanation": "Top candidate based on technical expertise and cultural alignment."
     }
   ],
   "hiringRecommendations": {
     "topCandidate": {
-      "applicationId": "67a75f845c65e303c752fe9c",
-      "applicantName": "John Doe"
+      "applicationId": "app123457",
+      "applicantName": "Michael Chen"
     },
-    "nextSteps": "Schedule an interview with John Doe to further assess his qualifications and cultural fit. Request references to verify his experience and achievements.",
-    "additionalInformationNeeded": "None",
+    "nextSteps": "Schedule technical interview and team meet",
+    "additionalInformationNeeded": "References verification",
     "potentialRedFlags": "None identified"
   }
 }

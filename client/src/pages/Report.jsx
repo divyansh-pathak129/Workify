@@ -3,6 +3,7 @@ import { Link, useParams, useLocation } from 'react-router-dom';
 import './Report.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
+import demoData from '../assets/repsonseDemoData.json';
 
 // Add Poppins font import
 const poppinsFont = document.createElement('link');
@@ -20,7 +21,7 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
-  const [reportData, setReportData] = useState({});
+  const [reportData, setReportData] = useState(demoData); // Initialize with demo data
   const { id } = useParams();
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -30,9 +31,31 @@ function Report() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   socket.on("report", (content) => {
-    setReportData(content);
-    console.log("This is the main content for the report: ", JSON.parse(content), content);
-  })
+    try {
+      const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
+      setReportData(parsedContent);
+    } catch (error) {
+      console.error("Error parsing report data:", error);
+    }
+  });
+
+  useEffect(() => {
+    // Add demo data immediately while waiting for socket
+    setReportData(demoData);
+
+    socket.on("report", (content) => {
+      try {
+        const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
+        setReportData(parsedContent);
+      } catch (error) {
+        console.error("Error parsing report data:", error);
+        // Fallback to demo data if parsing fails
+        setReportData(demoData);
+      }
+    });
+
+    return () => socket.off("report");
+  }, []);
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
@@ -70,21 +93,23 @@ function Report() {
   };
 
   const formatValue = (application, field) => {
+    if (!application) return '-';
+    
     switch (field) {
       case 'Applicant Name':
-        return application.applicantName;
+        return application.applicantName || '-';
       case 'Competence Score':
-        return application.competenceScore;
+        return application.competenceScore || '-';
       case 'Skill Score':
-        return application.skillScore;
+        return application.skillScore || '-';
       case 'Cultural Score':
-        return application.culturalScore;
+        return application.culturalScore || '-';
       case 'Overall Score':
-        return application.overallScore;
+        return application.overallScore || '-';
       case 'Justification':
-        return application.justification;
+        return application.justification || '-';
       case 'Contact':
-        return (
+        return application.applicantEmail ? (
           <a 
             href={`mailto:${application.applicantEmail}`}
             className="mail-btn"
@@ -102,7 +127,7 @@ function Report() {
               <polyline points="22,6 12,13 2,6" />
             </svg>
           </a>
-        );
+        ) : '-';
       default:
         return '-';
     }
@@ -155,11 +180,23 @@ function Report() {
   };
 
   const calculateReportMetrics = () => {
+    const applications = reportData.applicationAnalysis || [];
+    const avgScores = applications.reduce((acc, app) => {
+      acc.competence += app.competenceScore;
+      acc.skill += app.skillScore;
+      acc.cultural += app.culturalScore;
+      acc.overall += app.overallScore;
+      return acc;
+    }, { competence: 0, skill: 0, cultural: 0, overall: 0 });
+
+    const count = applications.length || 1;
+
     return {
-      totalJobs: jobsData.length,
-      activeJobs: jobsData.filter(job => job.status === 'active').length,
-      totalApplications: jobsData.reduce((acc, job) => acc + (job.applications?.length || 0), 0),
-      averageApplications: (jobsData.reduce((acc, job) => acc + (job.applications?.length || 0), 0) / jobsData.length || 0).toFixed(2)
+      "Total Applications": applications.length,
+      "Average Competence": (avgScores.competence / count).toFixed(1),
+      "Average Skill": (avgScores.skill / count).toFixed(1),
+      "Average Cultural Fit": (avgScores.cultural / count).toFixed(1),
+      "Overall Rating": (avgScores.overall / count).toFixed(1)
     };
   };
 
@@ -276,13 +313,11 @@ function Report() {
         </div>
         <div className='dashboard-content-body'>
           <div className="report-box">
-            <h3 className="report-title">Job Posting Analytics</h3>
+            <h3 className="report-title">Application Analytics</h3>
             <div className="report-content">
               {Object.entries(calculateReportMetrics()).map(([key, value]) => (
                 <div key={key} className="metric">
-                  <span className="metric-label">
-                    {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                  </span>
+                  <span className="metric-label">{key}</span>
                   <span className="metric-value">{value}</span>
                 </div>
               ))}
@@ -300,7 +335,7 @@ function Report() {
                   </tr>
                 </thead>
                 <tbody>
-                  {jobsData.applicationAnalysis?.map((application, index) => (
+                  {reportData.applicationAnalysis?.map((application) => (
                     <tr key={application.applicationId}>
                       {getHeaders().map(header => (
                         <td key={header}>
