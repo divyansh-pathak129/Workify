@@ -154,6 +154,12 @@ function Dashboard() {
     };
   };
 
+  const handleCreateJobPost = () => {
+    toast('Coming Soon!', {
+      style: getToastSuccessStyle(),
+    });
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -240,7 +246,7 @@ function Dashboard() {
             <h1>Welcome Back, {userData.name}</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={() => toast("Coming Soon!")}>Create Job Post</button>
+            <button className="new-post-btn" onClick={handleCreateJobPost}>Create Job Post</button>
           </div>
         </div>
         <div className='dashboard-content-body'>
