@@ -157,10 +157,10 @@ async function getRawData (jobId) {
   }
 }
 
-async function applicationData(applicationIds) {
+async function applicationData (applicationIds) {
   try {
     const database = client.db("application-data");
-    const collection = database.collection("applications");
+    const collection = database.collection("applicationsData");
     
     const promises = applicationIds.map(id => {
       if (typeof id !== "string" || id.length !== 24) return Promise.resolve(null);
@@ -170,7 +170,7 @@ async function applicationData(applicationIds) {
     const applicationDocs = await Promise.all(promises);
     const applications = applicationDocs.filter(app => app !== null);
     
-    return {status: "ok", content: applications};
+    return applications;
   } catch (error) {
     console.error("Error in applicationData:", error);
     return {status: "error", message: "Database error"};

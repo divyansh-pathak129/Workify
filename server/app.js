@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData, fetchJobs, evalate, getRawData } = require('./mongo1');
+const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData } = require('./mongo1');
 
 
 
@@ -50,20 +50,22 @@ io.on('connection', (socket) => {
     })
 
     socket.on("evaluateJob", async (jobId) => {
-        console.log('Evaluating job:', jobId);
-        const rawdata = await getRawData(jobId);
-        // const report = await evalate(jobId);
-        const report = rawdata;
-        console.log(rawdata)
-        socket.emit("report", report)
-    })
-
-    socket.on("fetchApplications", async (applicationIds) => {
-        const data = await applicationData(applicationIds);
-        if(data.status === "ok"){
-            socket.emit("applicationsData", data);
+        try {
+            console.log('Evaluating job:', jobId);
+            const data = await getRawData(jobId);
+            // console.log(data);
+            const evaluation = await applicationData(data.applications);
+            console.log(evaluation)
+            if (data.status === "ok") {
+                socket.emit("report", data);
+            } else {
+                socket.emit("error", { message: data.message || "Failed to fetch job data" });
+            }
+        } catch (error) {
+            console.error("Error in evaluateJob handler:", error);
+            socket.emit("error", { message: "Server error occurred" });
         }
-    });
+    })
 
 })
 

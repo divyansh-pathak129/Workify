@@ -10,7 +10,7 @@ import Report from './pages/Report'
 function App() {
   return (
     <Routes>
-      <Route path="/report" element={<Report />} />
+      <Route path="/report/:id/:jobId" element={<Report />} />
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />

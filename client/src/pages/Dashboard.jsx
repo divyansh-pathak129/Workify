@@ -91,7 +91,7 @@ function Dashboard() {
 
   const handleEvaluate = (jobId) => {
     socket.emit("evaluateJob", jobId)
-    navigate("/report")
+    navigate(`/report/${id}/${jobId}`);
     // console.log('Evaluating job:', jobId);
     // Add your evaluation logic here
   };
