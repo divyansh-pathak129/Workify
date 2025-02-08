@@ -179,21 +179,57 @@ async function applicationData (applicationIds) {
   }
 }
 
-async function generatePrompt (jobData, applicationData) {
+async function generatePrompt(jobData, applicationsData) {
   try {
-    const prompt = `Analyze this job posting and provide a detailed report:
-    
-    Title: ${jobData.title}
-    Description: ${jobData.description}
-    Requirements: ${jobData.requirements}
-    
-    Please provide:
-    1. Overview of the job posting
-    2. Key skills required
-    3. Suggested improvements
-    4. Clarity score (1-10)
-    5. Completeness score (1-10)
-    `;
+    console.log(applicationsData);
+    const prompt = `
+As an AI hiring assistant, analyze this job posting and its applications to provide a detailed evaluation report.
+
+JOB DETAILS:
+Title: ${jobData.jobPosition}
+Salary: ${jobData.salary}
+Company Values: ${jobData.companyValues}
+
+EVALUATION CRITERIA:
+For each application, provide scores on a scale of 1-10 for:
+- Competence Value Score: Based on education, experience, and achievements
+- Skill Value Score: Match between required skills and candidate's skillset
+- Cultural Value Score: Based on soft skills, notes, and overall profile alignment
+
+${applicationsData.content.map((app, index) => `
+APPLICATION ${index + 1} (ID: ${app._id}):
+General Info:
+- Name: ${app.general.name}
+- Education: ${app.education.degree} in ${app.education.field} from ${app.education.school}
+- Experience: ${app.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
+- Skills: ${app.skills.join(', ')}
+- Achievements: ${app.achievements.join(', ')}
+- Notes: ${app.notes}
+`).join('\n')}
+
+Please provide:
+1. Individual Application Analysis:
+   For each application, provide:
+   - Competence Value Score (1-10)
+   - Skill Value Score (1-10)
+   - Cultural Value Score (1-10)
+   - Brief justification (2-3 sentences)
+   - Overall applicant score (weighted average: 40% competence, 40% skills, 20% cultural fit)
+
+2. Comparative Analysis:
+   - Rank applications from highest to lowest overall score
+   - Identify top 3 candidates with brief explanations
+   - Note any standout strengths or concerns
+
+3. Hiring Recommendations:
+   - Suggest next steps for top candidates
+   - Identify any additional information needed
+   - Flag any potential red flags or areas needing clarification
+
+Format the response in a clear, structured manner using markdown for better readability.
+Ensure all scores are justified with specific examples from the applications.
+`;
+
     return prompt;
   } catch (error) {
     console.error("Error in generatePrompt:", error);
@@ -201,4 +237,4 @@ async function generatePrompt (jobData, applicationData) {
   }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData};
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt};

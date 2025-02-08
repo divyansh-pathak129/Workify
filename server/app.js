@@ -5,7 +5,9 @@ const { Server } = require('socket.io');
 const cors = require("cors");
 const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt } = require('./mongo1');
 
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
+const genAI = new GoogleGenerativeAI("AIzaSyDfd1sWQARRkqOQFf-9DXXpmTK5I_86up0");
 
 const app = express()
 app.use(cors());
@@ -52,21 +54,28 @@ io.on('connection', (socket) => {
     socket.on("evaluateJob", async (jobId) => {
         try {
             console.log('Evaluating job:', jobId);
-            const data = await getRawData(jobId);
-            // console.log(data);
-            const applicationsData = await applicationData(data.applications);
+            const jobData = await getRawData(jobId);
+            const applicationsData = await applicationData(jobData.applications);
             
-            const prompt = await generatePrompt(data, applicationsData);
-            
-            console.log(evaluation)
-            if (data.status === "ok") {
-                socket.emit("report", data);
-            } else {
-                socket.emit("error", { message: data.message || "Failed to fetch job data" });
-            }
+            const prompt = await generatePrompt(jobData, applicationsData);
+            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+            const result = await model.generateContent(prompt);
+            const analysis = await result.response.text();
+            console.log(analysis);
+            socket.emit("report", {
+                status: "ok",
+                content: {
+                    jobDetails: jobData,
+                    applications: applicationsData.content,
+                    analysis: analysis
+                }
+            });
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
-            socket.emit("error", { message: "Server error occurred" });
+            socket.emit("error", { 
+                status: "error", 
+                message: "Failed to generate analysis" 
+            });
         }
     })
 
