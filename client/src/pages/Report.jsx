@@ -29,7 +29,7 @@ function Report() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   socket.on("report", (content) => {
-    console.log(content)
+    console.log("This is the main content for the report: ", JSON.parse(content));
   })
 
   useEffect(() => {
