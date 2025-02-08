@@ -61,6 +61,11 @@ function Dashboard() {
     return Object.keys(jobsData[0]).filter(key => !exclude.includes(key));
   };
 
+  const handleEvaluate = (jobId) => {
+    console.log('Evaluating job:', jobId);
+    // Add your evaluation logic here
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -95,6 +100,7 @@ function Dashboard() {
                         {header.charAt(0).toUpperCase() + header.slice(1).replace(/([A-Z])/g, ' $1')}
                       </th>
                     ))}
+                    <th></th> {/* Empty header for evaluate button column */}
                   </tr>
                 </thead>
                 <tbody>
@@ -104,6 +110,14 @@ function Dashboard() {
                       {getHeaders().map(header => (
                         <td key={header}>{formatValue(job[header], header)}</td>
                       ))}
+                      <td>
+                        <button 
+                          className="evaluate-btn"
+                          onClick={() => handleEvaluate(job._id)}
+                        >
+                          Evaluate
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

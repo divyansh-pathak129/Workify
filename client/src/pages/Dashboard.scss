@@ -189,4 +189,24 @@
       }
     }
   }
+
+  .evaluate-btn {
+    background: rgba(23, 227, 178, 0.1);
+    color: var(--caribbean-green-400);
+    border: 1px solid var(--caribbean-green-600);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+
+    &:hover {
+      background: var(--caribbean-green-500);
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+    }
+  }
 }
