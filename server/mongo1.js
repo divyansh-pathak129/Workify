@@ -208,6 +208,7 @@ async function generatePrompt(jobData, applicationsData) {
     - Notes: ${app.content.notes}
     `).join('\n')}
     
+    Give every application 0 if the application is not relevant to the job posting or the application that are  incomplete or feel like jibberish., 
     Provide your analysis in the following strict JSON format with no additional text also dont put any backticks it should be a valid JSON object:
     {
       "applicationAnalysis": [
