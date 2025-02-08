@@ -181,69 +181,54 @@ async function applicationData (applicationIds) {
 
 async function generatePrompt(jobData, applicationsData) {
   try {
-    console.log(JSON.stringify(applicationsData, null, 2));
+    console.log(applicationsData);
     const prompt = `
-    As an AI hiring assistant, analyze this job posting and its applications to provide a detailed evaluation report.
-      
-    JOB DETAILS:
-    Title: ${jobData.jobPosition}
-    Salary: ${jobData.salary}
-    Company Values: ${jobData.companyValues}
-      
-    EVALUATION CRITERIA:
-    For each application, provide scores on a scale of 1-10 for:
-    - Competence Value Score: Based on education, experience, and achievements
-    - Skill Value Score: Match between required skills and candidate's skillset
-    - Cultural Value Score: Based on soft skills, notes, and overall profile alignment
-      
-    ${applicationsData.content.map((app, index) => `
-    APPLICATION ${index + 1} (ID: ${app._id}):
-    General Info:
-    - Name: ${app.content.general.name}
-    - Email: ${app.content.general.email}
-    - Education: ${app.content.education.degree} in ${app.content.education.field} from ${app.content.education.school}
-    - Experience: ${app.content.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
-    - Skills: ${app.content.skills.join(', ')}
-    - Achievements: ${app.content.achievements.join(', ')}
-    - Notes: ${app.content.notes}
-    `).join('\n')}
-    
-    Give every application 0 if the application is not relevant to the job posting or the application that are  incomplete or feel like jibberish., 
-    Provide your analysis in the following strict JSON format with no additional text also dont put any backticks it should be a valid JSON object:
-    {
-      "applicationAnalysis": [
-        {
-          "applicationId": "string",
-          "applicantName": "string",
-          "applicantEmail": "string",
-          "competenceScore": number,
-          "skillScore": number,
-          "culturalScore": number,
-          "overallScore": number,
-          "justification": "string"
-        }
-      ],
-      "comparativeAnalysis": [
-        {
-          "applicationId": "string",
-          "applicantName": "string",
-          "overallScore": number,
-          "explanation": "string"
-        }
-      ],
-      "hiringRecommendations": {
-        "topCandidate": {
-          "applicationId": "string",
-          "applicantName": "string"
-        },
-        "nextSteps": "string",
-        "additionalInformationNeeded": "string",
-        "potentialRedFlags": "string"
-      }
-    }
+As an AI hiring assistant, analyze this job posting and its applications to provide a detailed evaluation report.
 
-    Return ONLY the JSON object with no additional text or explanation. Ensure the response is valid JSON that can be parsed directly.
-    `;
+JOB DETAILS:
+Title: ${jobData.jobPosition}
+Salary: ${jobData.salary}
+Company Values: ${jobData.companyValues}
+
+EVALUATION CRITERIA:
+For each application, provide scores on a scale of 1-10 for:
+- Competence Value Score: Based on education, experience, and achievements
+- Skill Value Score: Match between required skills and candidate's skillset
+- Cultural Value Score: Based on soft skills, notes, and overall profile alignment
+
+${applicationsData.content.map((app, index) => `
+APPLICATION ${index + 1} (ID: ${app._id}):
+General Info:
+- Name: ${app.general.name}
+- Education: ${app.education.degree} in ${app.education.field} from ${app.education.school}
+- Experience: ${app.experience.map(exp => `${exp.position} at ${exp.company} (${exp.year})`).join(', ')}
+- Skills: ${app.skills.join(', ')}
+- Achievements: ${app.achievements.join(', ')}
+- Notes: ${app.notes}
+`).join('\n')}
+
+Please provide:
+1. Individual Application Analysis:
+   For each application, provide:
+   - Competence Value Score (1-10)
+   - Skill Value Score (1-10)
+   - Cultural Value Score (1-10)
+   - Brief justification (2-3 sentences)
+   - Overall applicant score (weighted average: 40% competence, 40% skills, 20% cultural fit)
+
+2. Comparative Analysis:
+   - Rank applications from highest to lowest overall score
+   - Identify top 3 candidates with brief explanations
+   - Note any standout strengths or concerns
+
+3. Hiring Recommendations:
+   - Suggest next steps for top candidates
+   - Identify any additional information needed
+   - Flag any potential red flags or areas needing clarification
+
+Format the response in a clear, structured manner using markdown for better readability.
+Ensure all scores are justified with specific examples from the applications.
+`;
 
     return prompt;
   } catch (error) {
@@ -252,40 +237,4 @@ async function generatePrompt(jobData, applicationsData) {
   }
 }
 
-async function insertApplication (formData, jobId) {
-  try {
-    const database = client.db("application-data");
-    const collection = database.collection("applicationsData");
-    const injectionContent = {
-      _id : new ObjectId(),
-      scores : {
-        competenceValue : 0,
-        skillValue : 0,
-        culturalValue : 0
-      },
-      content : formData,
-    }
-    const result = await collection.insertOne(injectionContent);
-    return injectionContent._id;
-  } catch (error) {
-    console.error("Error in insertApplication:", error);
-    return null;
-  }
-}
-
-async function updateJobApplications(jobId, applicationId) {
-  try{
-    const database = client.db("application-data");
-    const collection = database.collection("jobsData");
-    const applicationIdString = applicationId.toString();
-
-    const result = await collection.updateOne({ _id: new ObjectId(jobId) }, { $push: { applications: applicationIdString } });
-    return result;
-  }catch(error){
-    console.error("Error in updateJobApplications:", error);
-    return null;
-  }
-}
-
-
-module.exports = {insertApplication, login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, updateJobApplications};
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt};

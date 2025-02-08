@@ -206,9 +206,9 @@ function Dashboard() {
           </div>
           <div 
             className="nav-card job-posts-btn"
-            onClick={() => handleNavClick("/job-posts")}
+            onClick={() => handleNavClick(`/createjob/${id}`)}
           >
-            <Link to="/job-posts">Create Job Post</Link>
+            <Link>Create Job Post</Link>
           </div>
         </div>
         <div className='dashboard-sidebar-bottom'>
@@ -254,7 +254,10 @@ function Dashboard() {
             <h1>Welcome Back, {userData.name}</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={handleCreateJobPost}>Create Job Post</button>
+            <button className="new-post-btn" onClick={() => {
+              navigate(`/createjob/${id}`);
+            }
+            }>Create Job Post</button>
           </div>
         </div>
         <div className='dashboard-content-body'>
