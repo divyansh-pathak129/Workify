@@ -1,5 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://divyanshpathak129:qxyUYuq8ylKsc9FN@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
+const { getClient, closeClient, releaseClient } = require('./clientChecker.js');
 
 
 const client = new MongoClient(uri, {
@@ -12,10 +13,10 @@ const client = new MongoClient(uri, {
 
 
 
-async function login({credentials}) {
+async function fetchUserData({credentials}) {
 
+    let client = await getClient();
     try {
-        await client.connect();
         const database = client.db('application-data');
         const collection = database.collection('userData');
         const query = { username: credentials.name, password: credentials.password };
@@ -27,27 +28,26 @@ async function login({credentials}) {
             return {status: "error", message: "Invalid Credentials"};
         }
       } finally {
-        await client.close();
+       releaseClient();
       }
 
 }
 
-async function fetchUserData({credentials}) {
-
+async function login ({credentials}) {
+  let client = await getClient();
   try {
-      await client.connect();
       const database = client.db('application-data');
       const collection = database.collection('userData');
       const query = { username: credentials.name, password: credentials.password };
       const user = await collection.findOne(query);
       if(user){
-          return {status: "ok", message: "Login Successful", content: user};
+        return {status: "ok", message: "Login Successful", content: user};
       }
       else{
-          return {status: "error", message: "Invalid Credentials"};
+        return {status: "error", message: "Invalid Credentials"};
       }
     } finally {
-      await client.close();
+      releaseClient();
     }
 
 }

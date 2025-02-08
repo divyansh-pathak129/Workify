@@ -1,0 +1,133 @@
+:root {
+    --caribbean-green-50: #eafff8;
+    --caribbean-green-100: #ccffeb;
+    --caribbean-green-200: #9dfddd;
+    --caribbean-green-300: #5ef7cd;
+    --caribbean-green-400: #17e3b2;
+    --caribbean-green-500: #00d0a3;
+    --caribbean-green-600: #00a985;
+    --caribbean-green-700: #00886f;
+    --caribbean-green-800: #006b58;
+    --caribbean-green-900: #00584b;
+    --caribbean-green-950: #00322b;
+    background-color: #0E0E11;
+    color: var(--caribbean-green-500);
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+
+button {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--caribbean-green-500);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.25s;
+}
+
+button:hover {
+    background-color: var(--caribbean-green-600);
+}
+
+button:focus,
+button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-content {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 15px;
+    background-color: var(--caribbean-green-50);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--caribbean-green-200);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 15px;
+    background-color: var(--caribbean-green-50);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--caribbean-green-200);
+    margin: 0 auto;
+}
+
+.login-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.login-box input {
+    width: calc(100% - 2rem);
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--caribbean-green-200);
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.login-box button {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    background-color: var(--caribbean-green-500);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+.login-box button:hover {
+    background-color: var(--caribbean-green-600);
+}
+

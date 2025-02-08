@@ -22,11 +22,16 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
 
     socket.on("login", async (credentials, callback) => {
+       if(credentials){
         console.log(credentials);
         const content = await login({credentials});
         console.log(content);
-        callback(content);
-        socket.emit("loginCreds", content )
+        if(content.status === "ok"){
+            socket.emit("loginCreds", content )   
+        }else{
+            socket.emit("loginDenied", content )
+        }
+       }
     })
 
     socket.on("fetchUserData", async (credentials, callback) => {
