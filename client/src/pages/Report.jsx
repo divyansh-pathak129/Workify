@@ -42,6 +42,20 @@ function Report() {
     setJobsData(data.content)
   })
 
+  useEffect(() => {
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setIsDarkTheme(savedTheme === 'dark');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const handleThemeToggle = () => {
+    const newTheme = !isDarkTheme;
+    setIsDarkTheme(newTheme);
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', newTheme ? 'dark' : 'light');
+  };
+
   const formatValue = (value, field) => {
     if (field === 'dateOfCreation') {
       return new Date(value).toLocaleDateString('en-US', {
@@ -286,6 +300,14 @@ function Report() {
           },
         }}
       />
+      <div className="theme-toggle-wrapper">
+        <button 
+          className="theme-toggle-btn"
+          onClick={handleThemeToggle}
+        >
+          {isDarkTheme ? '☀️' : '🌙'}
+        </button>
+      </div>
     </div>
   );
 }

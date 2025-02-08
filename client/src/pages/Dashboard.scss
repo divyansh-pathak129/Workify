@@ -34,7 +34,7 @@
 
 // Add light theme variables
 [data-theme="light"] {
-  // Update background colors
+  // Base colors
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-card: #ffffff;
@@ -44,115 +44,60 @@
   --text-secondary: #636e72;
   --shadow-color: rgba(0, 0, 0, 0.08);
 
-  // Theme-specific colors
-  --text-accent: var(--caribbean-green-800);
-  --text-accent-hover: var(--caribbean-green-900);
-  --accent-bg: rgba(0, 208, 163, 0.1);
-  
-  // Global background override
+  // Document level changes
   background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
 
-  // Update all components
-  .dashboard-container {
-    background-color: var(--bg-primary);
+  * {
+    border-color: var(--border-color);
   }
 
-  .dashboard-sidebar {
+  // Component overrides
+  .dashboard-content,
+  .dashboard-sidebar,
+  .card,
+  .nav-card,
+  .profile-card,
+  .settings-card {
     background: var(--bg-secondary);
-    border-right: 1px solid var(--border-color);
-    box-shadow: 1px 0 8px rgba(0, 0, 0, 0.05);
+    border-color: var(--border-color);
   }
 
-  .nav-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    
-    &.active {
-      background: var(--accent-bg) !important;
-      border-color: var(--caribbean-green-200);
-    }
-  }
-
-  .card {
-    background: var(--bg-card);
-    box-shadow: 0 2px 8px var(--shadow-color);
-  }
-
-  .dashboard-content-header {
-    background: var(--bg-card);
-    border-bottom: 1px solid var(--border-color);
-  }
-
+  // Table specific
   .dashboard-table {
+    background: var(--bg-card);
+    
     th {
-      color: var(--text-accent);
       background: var(--bg-secondary);
-      border-bottom: 2px solid var(--caribbean-green-200);
+      color: var(--caribbean-green-800);
     }
-
+    
     td {
       color: var(--text-primary);
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    tr:hover {
-      background: var(--bg-hover);
     }
   }
 
-  .profile-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-
-    &.expanded {
-      background: var(--bg-secondary);
-    }
-
-    h3 {
-      color: var(--text-accent);
-    }
-
-    p {
-      color: var(--text-secondary);
-    }
+  // Text colors
+  .text-primary { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  
+  // Green accent overrides
+  .highlight,
+  h1, h2, h3 {
+    color: var(--caribbean-green-800) !important;
   }
 
-  .settings-overlay {
-    background: rgba(255, 255, 255, 0.9);
-  }
-
-  .settings-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-  }
-
-  // Button styles
+  // Button states
   .evaluate-btn,
-  .new-post-btn {
-    background: var(--accent-bg);
-    color: var(--text-accent);
+  .new-post-btn,
+  .settings-save-btn {
+    background: var(--caribbean-green-50);
+    color: var(--caribbean-green-800);
     border: 1px solid var(--caribbean-green-200);
 
     &:hover {
       background: var(--caribbean-green-600);
       color: white;
-    }
-  }
-
-  // Text colors
-  h1, h2, h3, .highlight {
-    color: var(--text-accent) !important;
-  }
-
-  // Scrollbars
-  ::-webkit-scrollbar-track {
-    background: var(--bg-hover);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: var(--caribbean-green-200);
-    &:hover {
-      background: var(--caribbean-green-300);
     }
   }
 }
