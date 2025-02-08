@@ -75,12 +75,41 @@ button:focus-visible {
     justify-content: center;
 
     .login-content {
-        text-align: center;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
+        padding: 0 2rem;
+        max-width: 1400px;
+        gap: 2rem;
 
         .product-header {
-            margin: 0 0 15px 0 !important;
-            padding: 0;
+            flex: 1;
+            text-align: right;
+            padding-right: 4rem;
+            padding-left: 0;
+            margin-left: 0;
+            transform: translateX(8px);
+
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                justify-content: flex-end;
+                margin-left: 0;
+
+                svg {
+                    order: -1;
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .product-title {
+                    margin-left: 1.5rem;
+                    font-size: 5rem;
+                }
+            }
 
             .product-title {
                 margin: 0;
@@ -90,12 +119,17 @@ button:focus-visible {
                 font-weight: bold;
                 letter-spacing: 4px;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                text-align: right;
             }
         }
 
         .login-container {
+            flex: 1;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
+            padding-left: 4rem;
+            padding-right: 0;
+            margin-right: 0;
 
             .login-box {
                 background-color: #151517;
@@ -104,6 +138,7 @@ button:focus-visible {
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
                 width: 100%;
                 max-width: 400px;
+                margin-left: 0;
 
                 h2 {
                     color: #17E3B2;

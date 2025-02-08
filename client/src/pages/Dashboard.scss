@@ -1,5 +1,4 @@
 :root {
-  /* Global theme variables */
   --caribbean-green-50: #eafff8;
   --caribbean-green-100: #ccffeb;
   --caribbean-green-200: #9dfddd;
@@ -27,24 +26,21 @@
 .dashboard-container {
   display: flex;
   height: 100vh;
-  background-color: #0E0E11; // enforce dark background
+  background-color: #0E0E11;
   overflow: hidden;
-  background: radial-gradient(circle at 10% 20%, #2d3436 0%, #000000 90%);
 }
 
 .dashboard-sidebar {
   width: 280px;
-  background: linear-gradient(180deg, #1e1e2f 0%, #1a1a2a 100%);
-  color: #b9b9c3;            // light text color
+  background: rgba(20, 20, 28, 0.95);
+  color: #b9b9c3;            
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
-  background: rgba(30, 30, 47, 0.4);
-  backdrop-filter: blur(10px);
   
   &:hover {
-    box-shadow: 0 0 20px rgba(0, 208, 163, 0.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -56,10 +52,9 @@
 
 .dashboard-content {
   flex: 1;
-  background: linear-gradient(135deg, #2a2a37 0%, #252532 100%);
+  background: #0E0E11;
   display: flex;
   flex-direction: column;
-  background: transparent;
 }
 
 .dashboard-content-header {
@@ -67,13 +62,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 32px;
-  background: rgba(58, 58, 71, 0.7);
+  background: rgba(20, 20, 28, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   
   h1 {
     font-family: 'Poppins', sans-serif;
-    font-size: 28px;  // single font-size declaration
+    font-size: 28px;  
     letter-spacing: 0.5px;
     color: var(--caribbean-green-100);
     margin: 0;
@@ -81,13 +76,13 @@
     &::after {
       content: '';
       display: block;
-      width: 100%;  // changed from fixed 40px to 100%
+      width: 100%;  
       height: 3px;
       background: var(--caribbean-green-500);
       border-radius: 2px;
       margin-top: 4px;
-      max-width: 100%;  // ensure it doesn't overflow
-      transition: width 0.3s ease;  // smooth width changes
+      max-width: 100%;  
+      transition: width 0.3s ease;  
     }
   }
 }
@@ -116,14 +111,13 @@
   }
 }
 
-// Add these new utility classes
+
 .card {
-  background: rgba(30, 30, 47, 0.7);
+  background: rgba(20, 20, 28, 0.95);
   border-radius: 12px;
   padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background: rgba(30, 30, 47, 0.4);
   backdrop-filter: blur(8px);
   
   &:hover {
@@ -136,12 +130,12 @@
   color: var(--caribbean-green-400);
   font-weight: 600;
   font-family: 'Poppins', sans-serif;
-  font-size: 42px;  // reduced from 80px to 42px
-  letter-spacing: 0.8px;  // slightly reduced letter spacing
+  font-size: 42px;  
+  letter-spacing: 0.8px;  
   margin-bottom: 16px;
-  text-shadow: 0 0 20px rgba(0, 208, 163, 0.3);
+  text-shadow: none;
   display: block;
   line-height: 1;
-  word-wrap: break-word;  // ensure text wraps if needed
-  max-width: 100%;  // constrain to parent width
+  word-wrap: break-word; 
+  max-width: 100%;  
 }
