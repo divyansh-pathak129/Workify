@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Dashboard.scss'
+import { io } from 'socket.io-client';
+
+const socket = io("http://localhost:3000", {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
+
 
 function Dashboard() {
+
+  useEffect(() => {
+    socket.emit("fetchUserData", {username: 'admin'})
+  })
+
+
   return (
    <div className="dashboard-container">
     <div className="dashboard-sidebar">
