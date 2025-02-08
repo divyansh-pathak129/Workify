@@ -34,18 +34,16 @@ io.on('connection', (socket) => {
        }
     })
 
-    socket.on("fetchUserData", async (credentials, callback) => {
-        const data = await fetchUserData({credentials});
+    socket.on("fetchUserData", async (id) => {
+        const data = await fetchUserData(id);
         console.log(data);
         if(data.status === "ok"){
+            console.log("Done dune")
             socket.emit("userData", data)
         }
         // callback(data);
     })
 
-    socket.on('disconnect', () => {
-        console.log(`User Disconnected: ${socket.id}`);
-    })
 })
 
 const PORT = process.env.PORT || 3000;

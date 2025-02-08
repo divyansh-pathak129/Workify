@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams} from 'react-router-dom';
 import './Dashboard.scss'
 import { io } from 'socket.io-client';
 
@@ -11,8 +11,16 @@ const socket = io("http://localhost:3000", {
 
 function Dashboard() {
 
+  const [userData, setUserData] = useState({});
+
+  const { id } = useParams();
+
   useEffect(() => {
-    socket.emit("fetchUserData", {username: 'admin'})
+    socket.emit("fetchUserData", id)
+  },[])
+
+  socket.on("userData", (content) => {
+    setUserData(content.content)  
   })
 
 
@@ -32,7 +40,7 @@ function Dashboard() {
     <div className='dashboard-content'>
       <div className='dashboard-content-header'>
         <div className='dashboard-content-header-left'>
-          <h1>Welcome Back</h1>
+          <h1>Welcome Back, {userData.name}</h1>
         </div>
         <div className='dashboard-content-header-right'>
 
