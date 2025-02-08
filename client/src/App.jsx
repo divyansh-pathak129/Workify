@@ -6,12 +6,14 @@ import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Report from './pages/Report'
+import ApplicationForm from './pages/application'
 
 function App() {
   return (
     <Routes>
       <Route path="/report/:id/:jobId" element={<Report />} />
       <Route path="/" element={<Login />} />
+      <Route path="/application-form" element={<ApplicationForm />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />
     </Routes>
