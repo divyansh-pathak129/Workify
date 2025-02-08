@@ -28,39 +28,120 @@
   display: flex;
   height: 100vh;
   background-color: #0E0E11; // enforce dark background
+  overflow: hidden;
+  background: radial-gradient(circle at 10% 20%, #2d3436 0%, #000000 90%);
 }
 
 .dashboard-sidebar {
-  width: 250px;
-  background-color: #1e1e2f; // dark sidebar background
+  width: 280px;
+  background: linear-gradient(180deg, #1e1e2f 0%, #1a1a2a 100%);
   color: #b9b9c3;            // light text color
   display: flex;
   flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  background: rgba(30, 30, 47, 0.4);
+  backdrop-filter: blur(10px);
+  
+  &:hover {
+    box-shadow: 0 0 20px rgba(0, 208, 163, 0.05);
+  }
 }
 
 .dashboard-sidebar-top,
 .dashboard-sidebar-middle,
 .dashboard-sidebar-bottom {
-  padding: 20px;
+  padding: 24px;
 }
 
 .dashboard-content {
   flex: 1;
-  background-color: #2a2a37; // dark main content background
+  background: linear-gradient(135deg, #2a2a37 0%, #252532 100%);
   display: flex;
   flex-direction: column;
+  background: transparent;
 }
 
 .dashboard-content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #3a3a47; // dark header background
-  color: #b9b9c3;            // light text color
+  padding: 20px 32px;
+  background: rgba(58, 58, 71, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;  // single font-size declaration
+    letter-spacing: 0.5px;
+    color: var(--caribbean-green-100);
+    margin: 0;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;  // changed from fixed 40px to 100%
+      height: 3px;
+      background: var(--caribbean-green-500);
+      border-radius: 2px;
+      margin-top: 4px;
+      max-width: 100%;  // ensure it doesn't overflow
+      transition: width 0.3s ease;  // smooth width changes
+    }
+  }
 }
 
 .dashboard-content-body {
   flex: 1;
-  padding: 20px;
+  padding: 32px;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--caribbean-green-900);
+    border-radius: 4px;
+    
+    &:hover {
+      background: var(--caribbean-green-800);
+    }
+  }
+}
+
+// Add these new utility classes
+.card {
+  background: rgba(30, 30, 47, 0.7);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: rgba(30, 30, 47, 0.4);
+  backdrop-filter: blur(8px);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.highlight {
+  color: var(--caribbean-green-400);
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  font-size: 42px;  // reduced from 80px to 42px
+  letter-spacing: 0.8px;  // slightly reduced letter spacing
+  margin-bottom: 16px;
+  text-shadow: 0 0 20px rgba(0, 208, 163, 0.3);
+  display: block;
+  line-height: 1;
+  word-wrap: break-word;  // ensure text wraps if needed
+  max-width: 100%;  // constrain to parent width
 }
