@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate} from 'react-router-dom';
 import './Dashboard.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
@@ -26,6 +26,7 @@ function Dashboard() {
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.emit("fetchUserData", id)
