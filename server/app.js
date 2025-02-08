@@ -68,23 +68,10 @@ io.on('connection', (socket) => {
             const result = await model.generateContent(prompt);
             const analysisText = await result.response.text();
             console.log("Analysis:", analysisText);
-            try {
-                // Parse the response into JSON
-                const analysisJson = JSON.parse(analysisText);
-                
-                // Emit the structured response
-                socket.emit("report", {
-                    status: "ok",
-                    analysis: analysisJson
-                });
-            } catch (parseError) {
-                console.error("Error parsing AI response:", parseError);
-                console.log("Raw AI response:", analysisText);
-                socket.emit("error", {
-                    status: "error",
-                    message: "Failed to parse AI analysis"
-                });
-            }
+            socket.emit("report", {
+                status: "ok",
+                analysis: analysisText
+            });
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
             socket.emit("error", { 
