@@ -3,6 +3,7 @@ import { Link, useParams, useLocation, useNavigate} from 'react-router-dom';
 import './Dashboard.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
+import Loading from '../Modals/Loading/Loading';
 
 // Add Poppins font import
 const poppinsFont = document.createElement('link');
@@ -29,6 +30,7 @@ function Dashboard() {
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
+  const [loadingModal, setLoadingModal] = useState(false);
 
   socket.on("reportData", (content) => {
     console.log(content);
@@ -103,7 +105,7 @@ function Dashboard() {
     toast(
       'Evaluating job...',
      );
-    
+    setLoadingModal(true);
     // navigate(`/report/${id}/${jobId}`);
     // console.log('Evaluating job:', jobId);
     // Add your evaluation logic here
@@ -387,6 +389,7 @@ function Dashboard() {
           },
         }}
       />
+      {loadingModal && <Loading />}
     </div>
   );
 }
