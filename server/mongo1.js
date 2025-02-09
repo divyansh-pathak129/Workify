@@ -253,4 +253,40 @@ async function generatePrompt(jobData, applicationsData) {
   }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt};
+async function insertApplication(formData, jobId) {
+  try {
+    const database = client.db("application-data");
+    const collection = database.collection("applicationsData");
+    const pushData = {
+      _id: new ObjectId(),
+      content: formData,
+      scores: {
+        competenceScore: 0,
+        skillScore: 0,
+        culturalScore: 0,
+        overallScore: 0
+      }
+    }
+    const application = await collection.insertOne(pushData);
+    return pushData._id;
+  } catch (error) {
+    console.error("Error in insertApplication:", error);
+    return null;
+  }
+}
+
+async function updateJobApplications(jobId, applicationId) {
+  try {
+    const database = client.db("application-data");
+    const collection = database.collection("jobsData");
+    const applicationIdString = applicationId.toString();
+
+    const updateResult = await collection.updateOne({ _id: new ObjectId(jobId) }, { $push: { applications: applicationIdString } });
+    return updateResult.modifiedCount > 0;
+  } catch (error) {
+    console.error("Error in updateJobApplications:", error);
+    return false;
+  }
+}
+
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications};
