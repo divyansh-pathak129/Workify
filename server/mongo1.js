@@ -331,4 +331,20 @@ async function insertJob (data, id) {
   }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, createJob, updateJobApplications, insertJob};
+async function fetchJobsAll () {
+  try{
+    const database = client.db("application-data");
+    const collection = database.collection("jobsData");
+    const jobs = await collection.find().toArray();
+    // console.log(jobs);
+    return {
+      status: "ok",
+      content: jobs
+    };
+  }catch(error){
+    console.error("Error in fetchJobsAll:", error);
+    return null;
+  }
+}
+
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, createJob, updateJobApplications, insertJob, fetchJobsAll};
