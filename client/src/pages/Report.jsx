@@ -335,6 +335,17 @@ function Report() {
             </div>
           </div>
           
+          <div className="report-box">
+            <h3 className="report-title">Best Candidate</h3>
+            <div className="report-content">
+              <div className="metric">
+                  <span className="metric-label">Name</span>
+                  <span className="metric-value">{reportData.hiringRecommendations?.topCandidate?.applicantName}</span>
+                  
+                </div>
+            </div>
+            </div>
+
           <div className="card">
             <div className="table-wrapper">
               <table className="dashboard-table">
