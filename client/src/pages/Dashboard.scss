@@ -32,7 +32,6 @@
   overflow-x: hidden;
 }
 
-// Add light theme variables
 [data-theme="light"] {
   // Base colors
   --bg-primary: #ffffff;
@@ -44,7 +43,6 @@
   --text-secondary: #636e72;
   --shadow-color: rgba(0, 0, 0, 0.08);
 
-  // Document level changes
   background-color: var(--bg-primary) !important;
   color: var(--text-primary) !important;
 
@@ -52,7 +50,6 @@
     border-color: var(--border-color);
   }
 
-  // Component overrides
   .dashboard-content,
   .dashboard-sidebar,
   .card,
@@ -63,7 +60,6 @@
     border-color: var(--border-color);
   }
 
-  // Table specific
   .dashboard-table {
     background: var(--bg-card);
     
@@ -95,17 +91,14 @@
     }
   }
 
-  // Text colors
   .text-primary { color: var(--text-primary); }
   .text-secondary { color: var(--text-secondary); }
   
-  // Green accent overrides
   .highlight,
   h1, h2, h3 {
     color: var(--caribbean-green-800) !important;
   }
 
-  // Button states
   .evaluate-btn,
   .new-post-btn,
   .settings-save-btn {
@@ -119,7 +112,6 @@
     }
   }
 
-  // Professional header style
   .dashboard-content-header {
     background: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
@@ -132,7 +124,7 @@
     }
   }
 
-  // Navigation cards
+ 
   .nav-card {
     background: #ffffff;
     border: 1px solid #e9ecef;
@@ -158,7 +150,7 @@
     }
   }
 
-  // Profile card
+
   .profile-card {
     background: #ffffff;
     border: 1px solid #e9ecef;
@@ -214,7 +206,11 @@
     }
   }
 
-  // Buttons
+
+
+
+
+
   .evaluate-btn,
   .new-post-btn {
     background: #ffffff;
@@ -230,7 +226,9 @@
     }
   }
 
-  // Settings modal
+
+
+
   .settings-overlay {
     background: rgba(255, 255, 255, 0.9);
   }
@@ -252,7 +250,8 @@
     }
   }
 
-  // Update base colors with darker shades for better contrast
+
+
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --bg-card: #ffffff;
@@ -262,7 +261,8 @@
   --text-secondary: #636e72;
   --shadow-color: rgba(0, 0, 0, 0.08);
   
-  // Override any existing button styles with !important
+
+
   .nav-card, 
   .evaluate-btn,
   .new-post-btn,
@@ -284,19 +284,20 @@
     }
   }
 
-  // Make text colors darker for better visibility
+
+
   .highlight,
   h1, h2, h3 {
     color: var(--caribbean-green-900) !important;
   }
 
-  // Update form highlight section
+
   .highlight-section {
     background-color: var(--bg-secondary) !important;
     border: 1px solid var(--border-color) !important;
   }
 
-  // Table styles
+
   .dashboard-table {
     th {
       color: var(--caribbean-green-900) !important;
@@ -308,7 +309,7 @@
     }
   }
 
-  // Profile and settings
+
   .profile-card {
     background-color: var(--bg-card) !important;
     
@@ -325,7 +326,7 @@
     }
   }
 
-  // Header section
+
   .dashboard-content-header {
     background-color: var(--bg-secondary) !important;
     
@@ -338,7 +339,8 @@
     }
   }
 
-  // Navigation buttons with higher specificity
+
+
   .dashboard-sidebar .dashboard-sidebar-middle {
     .nav-card {
       background-color: #ffffff !important;
@@ -375,7 +377,7 @@
       }
     }
 
-    // Match create job post button style
+ 
     .job-posts-btn {
       background-color: rgba(0, 208, 163, 0.1) !important;
       border: 1px solid var(--caribbean-green-600) !important;
@@ -395,7 +397,9 @@
     }
   }
 
-  // Update top bar button to match
+
+
+
   .dashboard-content-header {
     .new-post-btn {
       background-color: rgba(0, 208, 163, 0.1) !important;
@@ -409,7 +413,9 @@
     }
   }
 
-  // Override any conflicting styles
+
+
+
   .nav-card,
   .evaluate-btn,
   .new-post-btn {
@@ -424,7 +430,9 @@
     }
   }
 
-  // Table hover styles
+
+
+
   .dashboard-table {
     background: var(--bg-card) !important;
     
@@ -447,7 +455,9 @@
     }
   }
 
-  // Card hover effect
+
+
+
   .card {
     &:hover {
       background: var(--bg-card) !important;
@@ -498,8 +508,8 @@
   .dashboard-sidebar-middle {
     display: flex;
     flex-direction: column;
-    flex: 1; // Take remaining space
-    min-height: 0; // Allow content to scroll if needed
+    flex: 1;
+    min-height: 0;
     
     .nav-card:not(.job-posts-btn) {
       margin-bottom: 12px;
@@ -573,16 +583,15 @@
   .job-posts-btn {
     background: rgba(23, 227, 178, 0.15);
     border: none;
-    margin-top: auto; // Push to bottom of middle section
-    padding: 20px; // Increase padding
-    
+    margin-top: auto; 
+    padding: 20px; 
     a {
       color: var(--caribbean-green-200);
       font-weight: 600;
       font-size: 1.1rem;
       text-align: center;
       position: relative;
-      padding-left: 24px; // Space for plus icon
+      padding-left: 24px; 
 
       &:before {
         content: '+';
@@ -612,7 +621,7 @@
 
   .profile-card {
     display: flex;
-    align-items: center; // Vertically align items
+    align-items: center; 
     gap: 12px;
     padding: 10px;
     background: var(--bg-card);
@@ -629,9 +638,9 @@
     }
 
     .profile-avatar {
-      width: 32px; // Further reduce avatar size
-      height: 32px; // Further reduce avatar size
-      border-radius: 8px; // Adjust border radius
+      width: 32px; 
+      height: 32px; 
+      border-radius: 8px;
       background: var(--caribbean-green-500);
       color: white;
       display: flex;
@@ -639,17 +648,16 @@
       justify-content: center;
       font-family: 'Poppins', sans-serif;
       font-weight: 500;
-      font-size: 0.9rem; // Adjust font size
+      font-size: 0.9rem;
       flex-shrink: 0;
-      margin-right: 0; // Add spacing to the right of the avatar
-    }
+      margin-right: 0;
 
     .profile-info {
       flex: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center; // Vertically center the text
+      justify-content: center; 
 
       .profile-header {
         display: flex;
@@ -1126,9 +1134,9 @@
   }
 
   .highlight {
-    font-size: 32px; // Increased from 28px
+    font-size: 32px; x
     margin: 0;
     letter-spacing: 0.5px;
-    line-height: 32px; // Added to match SVG height
+    line-height: 32px; 
   }
 }
