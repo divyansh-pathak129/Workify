@@ -242,6 +242,17 @@ function Report() {
     }
   };
 
+  const handleDeleteJob = (jobId, e) => {
+    e.stopPropagation();
+    if (window.confirm('Are you sure you want to delete this job post?')) {
+      // Navigate back to dashboard after visual deletion
+      toast.success('Job post removed from view');
+      setTimeout(() => {
+        navigate(`/dashboard/${id}`);
+      }, 1500);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
