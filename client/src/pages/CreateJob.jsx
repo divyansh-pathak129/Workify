@@ -19,9 +19,14 @@ function JobForm() {
     requirements: [],
     location: '',
     salary: '',
+<<<<<<< HEAD
     type: 'Full-time',
     experience: '',
     skills: []
+=======
+    companyValues: '',
+    applications: []
+>>>>>>> 2a959b44a132c7c9033aec1353768f03f1c4fdd3
   });
 
   const handleSubmit = (e) => {
