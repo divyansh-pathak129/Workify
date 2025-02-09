@@ -111,7 +111,7 @@ const ApplicationForm = () => {
 
     try {
       const submission = {
-        jobId, // Using the jobId from URL params
+        jobId,
         submittedAt: new Date().toISOString(),
         ...formData
       };

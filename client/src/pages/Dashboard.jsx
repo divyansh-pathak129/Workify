@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
 import Loading from '../Modals/Loading/Loading';
 
-// Add Poppins font import
+
 const poppinsFont = document.createElement('link');
 poppinsFont.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap';
 poppinsFont.rel = 'stylesheet';
@@ -18,7 +18,6 @@ const socket = io("http://localhost:3000", {
 
 
 function Dashboard() {
-  // Add tempTheme state to track unsaved changes
   const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
   const [userData, setUserData] = useState({});
@@ -40,7 +39,6 @@ function Dashboard() {
   })
 
 
-  // Add theme effect
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setIsDarkTheme(savedTheme === 'dark');
@@ -65,7 +63,6 @@ function Dashboard() {
   },[])
 
   socket.on("userData", (content) => {
-    // console.log(content)
     setUserData(content.content)
     socket.emit("jobsFetch", content.content.jobs)
   })
@@ -108,7 +105,6 @@ function Dashboard() {
     setLoadingModal(true);
     // navigate(`/report/${id}/${jobId}`);
     // console.log('Evaluating job:', jobId);
-    // Add your evaluation logic here
   };
 
   const handleLogout = () => {

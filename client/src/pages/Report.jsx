@@ -5,7 +5,6 @@ import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
 import demoData from '../assets/repsonseDemoData.json';
 
-// Add Poppins font import
 const poppinsFont = document.createElement('link');
 poppinsFont.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap';
 poppinsFont.rel = 'stylesheet';
@@ -41,10 +40,6 @@ function Report() {
   });
 
   useEffect(() => {
-    // Initialize with demo data
-    // setReportData(demoData);
-
-    // Still listen for socket updates but fallback to demo data
     socket.on("report", (content) => {
       try {
         const parsedContent = typeof content === 'string' ? JSON.parse(content) : content;
@@ -73,7 +68,6 @@ function Report() {
   })
 
   socket.on("jobsData", async(data) => {
-    // console.log(data)
     setJobsData(data.content)
   })
 
@@ -157,12 +151,9 @@ function Report() {
   const handleEvaluate = (jobId) => {
     socket.emit("evaluateJob", jobId)
     navigate("/report")
-    // console.log('Evaluating job:', jobId);
-    // Add your evaluation logic here
   };
 
   const handleLogout = () => {
-    // Add logout logic here
     console.log('Logging out...');
   };
 

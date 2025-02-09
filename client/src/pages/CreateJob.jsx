@@ -17,13 +17,13 @@ function CreateJob() {
     // company: '',
     // location: '',
     salary: '',
-    // employmentType: 'Full-time', // default value
+    // employmentType: 'Full-time',
     // description: '',
     // requirements: '',
     // companyValues: '',
     // responsibilities: '',
     // benefits: '',
-    applications: [] // empty array to store future applications
+    applications: []
   });
 
   const handleSubmit = (e) => {
@@ -46,8 +46,7 @@ function CreateJob() {
     socket.on("jobCreated", (response) => {
       if (response.status === "ok") {
         toast.success('Job posted successfully!');
-        navigate('/dashboard'); // Redirect to dashboard after successful creation
-      } else {
+        navigate('/dashboard');
         toast.error(response.message || 'Failed to create job');
       }
     });
