@@ -100,6 +100,10 @@ function Dashboard() {
 
   const handleEvaluate = (jobId) => {
     socket.emit("evaluateJob", jobId)
+    toast(
+      'Evaluating job...',
+     );
+    
     // navigate(`/report/${id}/${jobId}`);
     // console.log('Evaluating job:', jobId);
     // Add your evaluation logic here
