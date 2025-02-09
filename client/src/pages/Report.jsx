@@ -233,6 +233,15 @@ function Report() {
     };
   };
 
+  const handleCreateJobPost = () => {
+    // Ensure we have the user ID before navigating
+    if (id) {
+      navigate(`/createjob/${id}`);
+    } else {
+      toast.error('Session error. Please try logging in again.');
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -263,8 +272,8 @@ function Report() {
           <div className="nav-card" onClick={handleSettingsClick}>
             <a href="#">Settings</a>
           </div>
-          <div className="nav-card job-posts-btn">
-            <Link to={`/createjob/${id}`}>Create Job Post</Link>
+          <div className="nav-card job-posts-btn" onClick={handleCreateJobPost}>
+            <Link>Create Job Post</Link>
           </div>
         </div>
         <div className='dashboard-sidebar-bottom'>
@@ -313,7 +322,7 @@ function Report() {
             <h1>Report</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={() => navigate(`/createjob/${id}`)}>
+            <button className="new-post-btn" onClick={handleCreateJobPost}>
               Create Job Post
             </button>
           </div>
