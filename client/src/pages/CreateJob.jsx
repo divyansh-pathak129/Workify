@@ -19,12 +19,7 @@ function JobForm() {
     requirements: [],
     location: '',
     salary: '',
-    // employmentType: 'Full-time',
-    // description: '',
-    // requirements: '',
     companyValues: '',
-    // responsibilities: '',
-    // benefits: '',
     applications: []
   });
 
