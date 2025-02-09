@@ -166,9 +166,12 @@ function Dashboard() {
   };
 
   const handleCreateJobPost = () => {
-    toast('Coming Soon!', {
-      style: getToastSuccessStyle(),
-    });
+    // Ensure we have the user ID before navigating
+    if (id) {
+      navigate(`/createjob/${id}`);
+    } else {
+      toast.error('Session error. Please try logging in again.');
+    }
   };
 
   const handleShare = (jobId) => {
@@ -267,7 +270,7 @@ function Dashboard() {
           <div className='dashboard-content-header-right'>
             <button 
               className="new-post-btn" 
-              onClick={() => navigate(`/createjob/${id}`)}
+              onClick={handleCreateJobPost}
             >
               Create Job Post
             </button>

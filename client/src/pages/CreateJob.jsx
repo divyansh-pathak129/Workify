@@ -19,13 +19,9 @@ function JobForm() {
     requirements: [],
     location: '',
     salary: '',
-    // employmentType: 'Full-time',
-    // description: '',
-    // requirements: '',
-    companyValues: '',
-    // responsibilities: '',
-    // benefits: '',
-    applications: []
+    type: 'Full-time',
+    experience: '',
+    skills: []
   });
 
   const handleSubmit = (e) => {

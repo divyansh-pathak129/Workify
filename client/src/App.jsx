@@ -13,13 +13,13 @@ function App() {
   return (
     <Routes>
       <Route path="/report/:id/:jobId" element={<Report />} />
-      <Route path="/createjob/:id/" element={<JobForm />} />
+      <Route path="/createjob/:id" element={<JobForm />} />
       <Route path="/" element={<Login />} />
       <Route path="/application/:jobId" element={<ApplicationForm />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
