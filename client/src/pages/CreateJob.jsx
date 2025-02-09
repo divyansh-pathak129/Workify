@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import './CreateJob.scss';
 import { toast, Toaster } from 'react-hot-toast';
@@ -11,17 +11,18 @@ const socket = io("http://localhost:3000", {
 
 function CreateJob() {
   const navigate = useNavigate();
+  const {id} = useParams();
   const [jobData, setJobData] = useState({
     jobPosition: '',
-    company: '',
-    location: '',
+    // company: '',
+    // location: '',
     salary: '',
-    employmentType: 'Full-time', // default value
-    description: '',
-    requirements: '',
-    companyValues: '',
-    responsibilities: '',
-    benefits: '',
+    // employmentType: 'Full-time', // default value
+    // description: '',
+    // requirements: '',
+    // companyValues: '',
+    // responsibilities: '',
+    // benefits: '',
     applications: [] // empty array to store future applications
   });
 
@@ -32,11 +33,11 @@ function CreateJob() {
       return;
     }
 
-    socket.emit("createJob", jobData);
+    socket.emit("createJob", jobData, id );
   };
 
   const validateForm = () => {
-    const requiredFields = ['jobPosition', 'company', 'salary', 'description', 'requirements'];
+    const requiredFields = ['jobPosition', 'salary'];
     return requiredFields.every(field => jobData[field].trim() !== '');
   };
 

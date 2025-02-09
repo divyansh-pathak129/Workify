@@ -23,11 +23,20 @@ function Dashboard() {
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
   const { id } = useParams();
+  const [reportDataSide, setReportDataSide] = useState({});
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const location = useLocation();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
+
+  socket.on("reportData", (content) => {
+    console.log(content);
+    setReportDataSide(content);
+    localStorage.setItem("reportData", JSON.stringify(content));
+    navigate(`/report/${id}/${content.jobId}`);
+  })
+
 
   // Add theme effect
   useEffect(() => {
@@ -54,7 +63,7 @@ function Dashboard() {
   },[])
 
   socket.on("userData", (content) => {
-    console.log(content)
+    // console.log(content)
     setUserData(content.content)
     socket.emit("jobsFetch", content.content.jobs)
   })
@@ -91,7 +100,7 @@ function Dashboard() {
 
   const handleEvaluate = (jobId) => {
     socket.emit("evaluateJob", jobId)
-    navigate(`/report/${id}/${jobId}`);
+    // navigate(`/report/${id}/${jobId}`);
     // console.log('Evaluating job:', jobId);
     // Add your evaluation logic here
   };

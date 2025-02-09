@@ -21,7 +21,8 @@ function Report() {
 
   const [userData, setUserData] = useState({});
   const [jobsData, setJobsData] = useState([]);
-  const [reportData, setReportData] = useState(demoData);
+  const data = JSON.parse(localStorage.getItem("reportData"));
+  const [reportData, setReportData] = useState(data || {});
   const { id, jobId } = useParams(); // Add jobId from params
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -41,7 +42,7 @@ function Report() {
 
   useEffect(() => {
     // Initialize with demo data
-    setReportData(demoData);
+    // setReportData(demoData);
 
     // Still listen for socket updates but fallback to demo data
     socket.on("report", (content) => {
