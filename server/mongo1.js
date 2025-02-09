@@ -347,4 +347,33 @@ async function fetchJobsAll () {
   }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, createJob, updateJobApplications, insertJob, fetchJobsAll};
+async function deleteJob(jobId, id) {
+    try{
+        const database = client.db("application-data");
+        const collection = database.collection("jobsData");
+        const job = await collection.findOne({ _id: new ObjectId(jobId) });
+        if(job.parentUserId.toString() === id){
+            const deleteResult = await collection.deleteOne({ _id: new ObjectId(jobId) });
+            return deleteResult.deletedCount > 0;
+        }
+    }catch(error){
+        console.error("Error in deleteJob:", error);
+        return null;
+    }
+}
+
+async function removeJob(jobId, id) {
+  try{
+    const database = client.db("application-data");
+    const collection = database.collection("userData");
+    const job = await collection.findOne({ _id: new ObjectId(id) });
+    const jobIdString = jobId.toString();
+    const updateResult = await collection.updateOne({ _id: new ObjectId(id) }, { $pull: { jobs: jobIdString } });
+    return updateResult.modifiedCount > 0;
+  }catch(error){
+    console.error("Error in removeJob:", error);
+    return null;
+  }
+}
+
+module.exports = {deleteJob, removeJob, login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, createJob, updateJobApplications, insertJob, fetchJobsAll};

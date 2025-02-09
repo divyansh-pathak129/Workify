@@ -190,7 +190,7 @@ function Dashboard() {
   const handleDeleteJob = (jobId, e) => {
     e.stopPropagation(); // Prevent row from toggling
     if (window.confirm('Are you sure you want to delete this job post?')) {
-      socket.emit("deleteJob", { jobId, userId: id });
+      socket.emit("deleteJob",  jobId, id);
       toast.success('Job post deleted successfully');
     }
   };
