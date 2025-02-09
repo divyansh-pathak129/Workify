@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import './CreateJob.scss';
 import { toast, Toaster } from 'react-hot-toast';
+import './CreateJob.scss';
 
 const socket = io("http://localhost:3000", {
   transports: ["websocket", "polling"],
   withCredentials: true,
 });
 
-function CreateJob() {
+function JobForm() {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const {id} = useParams();
-  const [jobData, setJobData] = useState({
-    jobPosition: '',
-    // company: '',
-    // location: '',
+  const [formData, setFormData] = useState({
+    title: '',
+    company: '',
+    description: '',
+    requirements: [],
+    location: '',
     salary: '',
     // employmentType: 'Full-time',
     // description: '',
@@ -28,33 +30,25 @@ function CreateJob() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) {
-      toast.error('Please fill all required fields');
-      return;
+    socket.emit("createJob", { ...formData, parentUserId: id });
+    toast.success('Job posted successfully!');
+    setTimeout(() => navigate(`/dashboard/${id}`), 1500);
+  };
+
+  const handleChange = (e, field) => {
+    const { value } = e.target;
+    if (field === 'requirements' || field === 'skills') {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value.split(',').map(item => item.trim())
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [field]: value
+      }));
     }
-
-    socket.emit("createJob", jobData, id );
   };
-
-  const validateForm = () => {
-    const requiredFields = ['jobPosition', 'salary'];
-    return requiredFields.every(field => jobData[field].trim() !== '');
-  };
-
-  // Setup socket listener for response
-  React.useEffect(() => {
-    socket.on("jobCreated", (response) => {
-      if (response.status === "ok") {
-        toast.success('Job posted successfully!');
-        navigate('/dashboard');
-        toast.error(response.message || 'Failed to create job');
-      }
-    });
-
-    return () => {
-      socket.off("jobCreated");
-    };
-  }, [navigate]);
 
   return (
     <div className="create-job-container">
@@ -75,106 +69,131 @@ function CreateJob() {
               </clipPath>
             </defs>
           </svg>
-          <h2 className="highlight">Create New Position</h2>
+          <h2 className="highlight">Workify</h2>
         </div>
       </div>
 
       <div className="create-job-content">
-        <form onSubmit={handleSubmit} className="job-form">
-          <section className="form-section">
-            <h3>Basic Information</h3>
-            <div className="input-group">
+        <div className="form-card">
+          <h1>Create New Job Post</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Job Title</label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) => handleChange(e, 'title')}
+                  placeholder="e.g., Senior Software Engineer"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Company</label>
+                <input
+                  type="text"
+                  value={formData.company}
+                  onChange={(e) => handleChange(e, 'company')}
+                  placeholder="Your company name"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Location</label>
+                <input
+                  type="text"
+                  value={formData.location}
+                  onChange={(e) => handleChange(e, 'location')}
+                  placeholder="e.g., New York, NY (Remote)"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Type</label>
+                <select
+                  value={formData.type}
+                  onChange={(e) => handleChange(e, 'type')}
+                >
+                  <option value="Full-time">Full-time</option>
+                  <option value="Part-time">Part-time</option>
+                  <option value="Contract">Contract</option>
+                  <option value="Internship">Internship</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Experience Level</label>
+                <input
+                  type="text"
+                  value={formData.experience}
+                  onChange={(e) => handleChange(e, 'experience')}
+                  placeholder="e.g., 3-5 years"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Salary Range</label>
+                <input
+                  type="text"
+                  value={formData.salary}
+                  onChange={(e) => handleChange(e, 'salary')}
+                  placeholder="e.g., $80,000 - $120,000"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-group full-width">
+              <label>Required Skills (comma-separated)</label>
               <input
                 type="text"
-                placeholder="Job Position*"
-                value={jobData.jobPosition}
-                onChange={(e) => setJobData({ ...jobData, jobPosition: e.target.value })}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Company Name*"
-                value={jobData.company}
-                onChange={(e) => setJobData({ ...jobData, company: e.target.value })}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Location"
-                value={jobData.location}
-                onChange={(e) => setJobData({ ...jobData, location: e.target.value })}
-              />
-              <input
-                type="text"
-                placeholder="Salary Range*"
-                value={jobData.salary}
-                onChange={(e) => setJobData({ ...jobData, salary: e.target.value })}
+                value={formData.skills.join(', ')}
+                onChange={(e) => handleChange(e, 'skills')}
+                placeholder="e.g., React, Node.js, TypeScript"
                 required
               />
             </div>
-          </section>
 
-          <section className="form-section">
-            <h3>Job Details</h3>
-            <div className="input-group">
-              <select
-                value={jobData.employmentType}
-                onChange={(e) => setJobData({ ...jobData, employmentType: e.target.value })}
-              >
-                <option value="Full-time">Full-time</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Contract">Contract</option>
-                <option value="Internship">Internship</option>
-              </select>
-              
-              <textarea
-                placeholder="Job Description*"
-                value={jobData.description}
-                onChange={(e) => setJobData({ ...jobData, description: e.target.value })}
+            <div className="form-group full-width">
+              <label>Requirements (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.requirements.join(', ')}
+                onChange={(e) => handleChange(e, 'requirements')}
+                placeholder="e.g., Bachelor's degree, 3+ years experience"
                 required
-                rows={4}
-              />
-              
-              <textarea
-                placeholder="Requirements*"
-                value={jobData.requirements}
-                onChange={(e) => setJobData({ ...jobData, requirements: e.target.value })}
-                required
-                rows={4}
-              />
-              
-              <textarea
-                placeholder="Company Values*"
-                value={jobData.companyValues}
-                onChange={(e) => setJobData({ ...jobData, companyValues: e.target.value })}
-                required
-                rows={4}
-              />
-              
-              <textarea
-                placeholder="Responsibilities"
-                value={jobData.responsibilities}
-                onChange={(e) => setJobData({ ...jobData, responsibilities: e.target.value })}
-                rows={4}
-              />
-              
-              <textarea
-                placeholder="Benefits"
-                value={jobData.benefits}
-                onChange={(e) => setJobData({ ...jobData, benefits: e.target.value })}
-                rows={4}
               />
             </div>
-          </section>
 
-          <button type="submit" className="submit-btn">
-            Create Position
-          </button>
-        </form>
+            <div className="form-group full-width">
+              <label>Job Description</label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => handleChange(e, 'description')}
+                placeholder="Detailed job description..."
+                rows={6}
+                required
+              />
+            </div>
+
+            <div className="button-group">
+              <button type="button" onClick={() => navigate(`/dashboard/${id}`)} className="cancel-btn">
+                Cancel
+              </button>
+              <button type="submit" className="submit-btn">
+                Create Job Post
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
       <Toaster position="bottom-right" />
     </div>
   );
 }
 
-export default CreateJob;
+export default JobForm;

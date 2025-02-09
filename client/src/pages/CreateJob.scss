@@ -4,81 +4,197 @@
   min-height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
+  width: 100%;
+  overflow-x: hidden;
 
   .create-job-header {
     background: var(--bg-secondary);
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    height: 72px;
+
+    .logo-container {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .create-job-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 2rem;
 
-    .job-form {
-      background: var(--bg-card);
+    .form-card {
+      background: var(--bg-secondary);
       border-radius: 12px;
       padding: 2rem;
       border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px var(--shadow-color);
 
       h1 {
         color: var(--caribbean-green-400);
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        font-family: 'Poppins', sans-serif;
+        
+        &::after {
+          content: '';
+          display: block;
+          width: 60px;
+          height: 3px;
+          background: var(--caribbean-green-500);
+          margin-top: 8px;
+          border-radius: 2px;
+        }
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
         margin-bottom: 1.5rem;
       }
 
-      .form-section {
-        margin-bottom: 2rem;
+      .form-group {
+        margin-bottom: 1.5rem;
 
-        h3 {
-          color: var(--text-primary);
-          margin-bottom: 1rem;
+        &.full-width {
+          grid-column: 1 / -1;
         }
 
-        .input-group {
-          display: grid;
-          gap: 1rem;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: var(--caribbean-green-300);
+          font-weight: 500;
+          font-family: 'Poppins', sans-serif;
+        }
 
-          input, textarea, select {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
+        input, select, textarea {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          background: var(--bg-card);
+          color: var(--text-primary);
+          font-size: 0.95rem;
+          font-family: 'Poppins', sans-serif;
+          transition: all 0.2s ease;
+
+          &:focus {
+            outline: none;
+            border-color: var(--caribbean-green-500);
+            box-shadow: 0 0 0 2px rgba(0, 208, 163, 0.1);
+          }
+
+          &::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+          }
+        }
+
+        textarea {
+          resize: vertical;
+          min-height: 120px;
+          line-height: 1.5;
+        }
+      }
+
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+
+        button {
+          padding: 0.75rem 1.5rem;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-family: 'Poppins', sans-serif;
+
+          &.cancel-btn {
+            background: transparent;
             color: var(--text-primary);
-            font-size: 1rem;
+            border: 1px solid var(--border-color);
 
-            &:focus {
-              border-color: var(--caribbean-green-400);
-              outline: none;
+            &:hover {
+              background: var(--bg-hover);
+              border-color: var(--caribbean-green-600);
             }
           }
 
-          textarea {
-            min-height: 150px;
-            resize: vertical;
+          &.submit-btn {
+            background: var(--caribbean-green-500);
+            color: white;
+            border: none;
+
+            &:hover {
+              background: var(--caribbean-green-600);
+              transform: translateY(-1px);
+              box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-theme="light"] {
+  .create-job-container {
+    background: var(--bg-primary);
+
+    .form-card {
+      background: var(--bg-card);
+      border-color: var(--border-color);
+      
+      h1 {
+        color: var(--caribbean-green-800);
+      }
+
+      .form-group {
+        label {
+          color: var(--caribbean-green-700);
+        }
+
+        input, select, textarea {
+          background: var(--bg-secondary);
+          border-color: var(--border-color);
+          color: var(--text-primary);
+
+          &::placeholder {
+            color: var(--text-secondary);
           }
 
-          select {
-            cursor: pointer;
+          &:focus {
+            border-color: var(--caribbean-green-600);
+            box-shadow: 0 0 0 2px rgba(0, 208, 163, 0.1);
           }
         }
       }
 
-      .submit-btn {
-        background: var(--caribbean-green-500);
-        color: white;
-        padding: 1rem 2rem;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
+      .button-group {
+        .cancel-btn {
+          background: var(--bg-secondary);
+          color: var(--text-primary);
 
-        &:hover {
+          &:hover {
+            background: var(--caribbean-green-50);
+            color: var (--caribbean-green-700);
+          }
+        }
+
+        .submit-btn {
           background: var(--caribbean-green-600);
-          transform: translateY(-1px);
+          
+          &:hover {
+            background: var(--caribbean-green-700);
+          }
         }
       }
     }

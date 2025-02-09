@@ -467,20 +467,8 @@
   }
 
   .logo-container {
-    svg {
-      filter: brightness(0.9);
-    }
-  }
-
-  .share-btn {
-    background: var(--caribbean-green-50);
-    color: var(--caribbean-green-700);
-    border: 1px solid var(--caribbean-green-300);
-
-    &:hover {
-      background: var(--caribbean-green-600);
-      color: white;
-      border-color: var(--caribbean-green-600);
+    .highlight {
+      color: var(--caribbean-green-800);
     }
   }
 }
@@ -524,7 +512,10 @@
 }
 
 .dashboard-sidebar-top {
-  padding: 24px;
+  padding: 16px 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid var(--border-color);
   
   .highlight {
@@ -651,13 +642,14 @@
       font-size: 0.9rem;
       flex-shrink: 0;
       margin-right: 0;
+    } // Added missing closing brace for profile-avatar
 
     .profile-info {
       flex: 1;
       min-width: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center; 
+      justify-content: center;
 
       .profile-header {
         display: flex;
@@ -880,7 +872,7 @@
   
   td {
     padding: 16px;
-    color: var(--text-primary);
+    color: var (--text-primary);
     border-bottom: 1px solid var(--border-color);
   }
   
@@ -1125,7 +1117,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0 4px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
 
   svg {
     width: 32px;
@@ -1134,10 +1128,31 @@
   }
 
   .highlight {
-    font-size: 32px; 
+    font-size: 28px;
     margin: 0;
+    padding: 0;
     letter-spacing: 0.5px;
-    line-height: 32px; 
+    line-height: 1;
+    color: var(--caribbean-green-400);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
   }
 }
+
+// Header container styles for all pages
+.dashboard-sidebar-top,
+.create-job-header,
+.application-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  height: 72px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
 }
