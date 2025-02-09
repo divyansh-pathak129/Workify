@@ -20,7 +20,7 @@ function CreateJob() {
     // employmentType: 'Full-time',
     // description: '',
     // requirements: '',
-    // companyValues: '',
+    companyValues: '',
     // responsibilities: '',
     // benefits: '',
     applications: []

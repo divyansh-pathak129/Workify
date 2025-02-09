@@ -289,4 +289,41 @@ async function updateJobApplications(jobId, applicationId) {
   }
 }
 
-module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications};
+async function createJob (jobData, id) {
+  try{
+    const database = client.db("application-data");
+    const collection = database.collection("jobsData");
+    const pushData = {
+      _id: new ObjectId(),
+      jobPositon: jobData.jobPosition,
+      salary: jobData.salary,
+      companyValues: jobData.companyValues,
+      dateOfCreation: new Date(),
+      parentUserId: new ObjectId(id),
+      isOpen: true,
+      applications: []
+    }
+    console.log(pushData)
+    const job = await collection.insertOne(pushData);
+    return pushData._id;
+  } catch (error) {
+    console.error("Error in createJob:", error);
+    return null;
+  }
+}
+
+async function insertJob (data, id) {
+  try{
+    const database = client.db("application-data");
+    const collection = database.collection("userData");
+    const jobIdString = data.toString();
+
+    const updateResult = await collection.updateOne({ _id: new ObjectId(id) }, { $push: { jobs: jobIdString } });
+    // return pushData._id;
+  } catch (error) {
+    console.error("Error in insertJob:", error);
+    return null;
+  }
+}
+
+module.exports = {login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, createJob, updateJobApplications, insertJob};
