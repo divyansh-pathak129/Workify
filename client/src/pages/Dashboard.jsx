@@ -60,8 +60,8 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    socket.emit("fetchUserData", id)
-  },[])
+    socket.emit("fetchUserData", id);
+  }, [id]);
 
   socket.on("userData", (content) => {
     setUserData(content.content)
@@ -188,12 +188,17 @@ function Dashboard() {
   };
 
   const handleDeleteJob = (jobId, e) => {
-    e.stopPropagation(); // Prevent row from toggling
+    e.stopPropagation();
     if (window.confirm('Are you sure you want to delete this job post?')) {
-      // Remove job from local state only
+      // Remove from local state immediately
       setJobsData(prevJobs => prevJobs.filter(job => job._id !== jobId));
-      setExpandedRow(null); // Close expanded row
+      setExpandedRow(null);
       toast.success('Job post removed from view');
+      
+      // Refresh the jobs data after a brief delay
+      setTimeout(() => {
+        socket.emit("fetchUserData", id);
+      }, 100);
     }
   };
 
