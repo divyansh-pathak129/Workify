@@ -265,10 +265,12 @@ function Dashboard() {
             <h1>Welcome Back, {userData.name}</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={() => {
-              navigate(`/createjob/${id}`);
-            }
-            }>Create Job Post</button>
+            <button 
+              className="new-post-btn" 
+              onClick={() => navigate(`/createjob/${id}`)}
+            >
+              Create Job Post
+            </button>
           </div>
         </div>
         <div className='dashboard-content-body'>

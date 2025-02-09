@@ -9,6 +9,14 @@
     background: var(--bg-secondary);
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border-color);
+    height: 72px;
+    display: flex;
+    align-items: center;
+
+    .logo-container {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .application-content {

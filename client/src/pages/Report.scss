@@ -61,6 +61,16 @@
   padding: 24px;
 }
 
+.dashboard-sidebar-top {
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+
+  .logo-container {
+    margin: 0;
+    padding: 0;
+  }
+}
+
 .dashboard-sidebar-middle {
   padding: 24px;
 
