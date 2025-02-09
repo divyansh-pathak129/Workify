@@ -52,9 +52,11 @@ io.on('connection', (socket) => {
 
     socket.on(
         "createJob", async (jobData, id) => {
+            console.log(jobData, id);
             const data = await createJob(jobData, id);
+            console.log(data);
             insertJob(data, id);
-            // console.log(data);
+            
         }
     )
 

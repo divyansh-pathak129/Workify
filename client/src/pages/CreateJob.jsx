@@ -13,7 +13,7 @@ function JobForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    title: '',
+    jobPosition: '',
     company: '',
     description: '',
     requirements: [],
@@ -22,15 +22,15 @@ function JobForm() {
     type: 'Full-time',
     experience: '',
     skills: [],
-    companyValues: '',
+    companyValues: [],
     applications: []
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("createJob", { ...formData, parentUserId: id });
+    socket.emit("createJob", formData, id );
     toast.success('Job posted successfully!');
-    setTimeout(() => navigate(`/dashboard/${id}`), 1500);
+    // setTimeout(() => navigate(`/dashboard/${id}`), 1500);
   };
 
   const handleChange = (e, field) => {
@@ -80,8 +80,8 @@ function JobForm() {
                 <label>Job Title</label>
                 <input
                   type="text"
-                  value={formData.title}
-                  onChange={(e) => handleChange(e, 'title')}
+                  value={formData.jobPosition}
+                  onChange={(e) => handleChange(e, 'jobPosition')}
                   placeholder="e.g., Senior Software Engineer"
                   required
                 />
@@ -152,6 +152,17 @@ function JobForm() {
                 value={formData.skills.join(', ')}
                 onChange={(e) => handleChange(e, 'skills')}
                 placeholder="e.g., React, Node.js, TypeScript"
+                required
+              />
+            </div>
+
+            <div className="form-group full-width">
+              <label>Company Values (comma-separated)</label>
+              <input
+                type="text"
+                value={formData.companyValues.join(', ')}
+                onChange={(e) => handleChange(e, 'companyValues')}
+                placeholder="e.g., innovation, teamwork, customer-centricity"
                 required
               />
             </div>
