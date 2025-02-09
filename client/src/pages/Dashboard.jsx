@@ -190,8 +190,10 @@ function Dashboard() {
   const handleDeleteJob = (jobId, e) => {
     e.stopPropagation(); // Prevent row from toggling
     if (window.confirm('Are you sure you want to delete this job post?')) {
-      socket.emit("deleteJob", { jobId, userId: id });
-      toast.success('Job post deleted successfully');
+      // Remove job from local state only
+      setJobsData(prevJobs => prevJobs.filter(job => job._id !== jobId));
+      setExpandedRow(null); // Close expanded row
+      toast.success('Job post removed from view');
     }
   };
 
