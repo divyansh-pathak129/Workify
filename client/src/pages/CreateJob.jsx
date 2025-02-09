@@ -35,10 +35,12 @@ function JobForm() {
 
   const handleChange = (e, field) => {
     const { value } = e.target;
-    if (field === 'requirements' || field === 'skills') {
+    if (field === 'requirements' || field === 'skills' || field === 'companyValues') {
+      // Handle arrays properly, ensuring value exists before splitting
+      const arrayValue = value ? value.split(',').map(item => item.trim()) : [];
       setFormData(prev => ({
         ...prev,
-        [field]: value.split(',').map(item => item.trim())
+        [field]: arrayValue
       }));
     } else {
       setFormData(prev => ({

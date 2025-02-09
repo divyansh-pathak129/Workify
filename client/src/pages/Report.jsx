@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import './Report.scss';
 import { io } from 'socket.io-client';
 import {Toaster, toast} from 'react-hot-toast';
@@ -29,6 +29,7 @@ function Report() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [tempTheme, setTempTheme] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const navigate = useNavigate();
 
   socket.on("report", (content) => {
     try {
@@ -259,7 +260,7 @@ function Report() {
             <a href="#">Settings</a>
           </div>
           <div className="nav-card job-posts-btn">
-            <Link to="/job-posts">Create Job Post</Link>
+            <Link to={`/createjob/${id}`}>Create Job Post</Link>
           </div>
         </div>
         <div className='dashboard-sidebar-bottom'>
@@ -308,7 +309,7 @@ function Report() {
             <h1>Report</h1>
           </div>
           <div className='dashboard-content-header-right'>
-            <button className="new-post-btn" onClick={() => toast("Coming Soon!")}>
+            <button className="new-post-btn" onClick={() => navigate(`/createjob/${id}`)}>
               Create Job Post
             </button>
           </div>
