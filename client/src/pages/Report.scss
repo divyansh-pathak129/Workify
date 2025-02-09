@@ -178,9 +178,9 @@
       justify-content: center;
       font-family: 'Poppins', sans-serif;
       font-weight: 500;
-      font-size: 0.9rem; // Adjust font size
+      font-size: 0.9rem; 
       flex-shrink: 0;
-      margin-right: 0; // Add spacing to the right of the avatar
+      margin-right: 0; 
     }
 
     .profile-info {
@@ -188,7 +188,7 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center; // Vertically center the text
+      justify-content: center;
 
       .profile-header {
         display: flex;
@@ -687,7 +687,6 @@
 
 [data-theme="light"] {
   // Add all the light theme variables from Dashboard.scss
-  // ...existing light theme variables...
 
   .report-container {
     background: var(--bg-primary);
@@ -699,7 +698,7 @@
     border-color: var(--border-color);
   }
 
-  // Add any other report-specific light theme styles
+
 
   .mail-btn {
     background: var(--caribbean-green-50);
@@ -728,7 +727,7 @@
 // Import the base styles
 @import './Dashboard.scss';
 
-// Additional Report-specific styles
+
 .report-box {
   background: var(--bg-card);
   border-radius: 12px;
@@ -768,7 +767,7 @@
   }
 }
 
-// Light theme overrides for Report page
+
 [data-theme="light"] {
   .report-box {
     background: var(--bg-card) !important;
@@ -800,7 +799,7 @@
     }
   }
 
-  // Override table styles specifically for report page
+
   .dashboard-table {
     tbody tr {
       &:hover {
