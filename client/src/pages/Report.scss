@@ -46,8 +46,8 @@
   .dashboard-sidebar-middle {
     display: flex;
     flex-direction: column;
-    flex: 1; // Take remaining space
-    min-height: 0; // Allow content to scroll if needed
+    flex: 1; 
+    min-height: 0; 
     
     .nav-card:not(.job-posts-btn) {
       margin-bottom: 12px;
@@ -112,8 +112,8 @@
   .job-posts-btn {
     background: rgba(23, 227, 178, 0.15);
     border: none;
-    margin-top: auto; // Push to bottom of middle section
-    padding: 20px; // Increase padding
+    margin-top: auto; 
+    padding: 20px; 
     
     a {
       color: var(--caribbean-green-200);
@@ -121,7 +121,7 @@
       font-size: 1.1rem;
       text-align: center;
       position: relative;
-      padding-left: 24px; // Space for plus icon
+      padding-left: 24px;
 
       &:before {
         content: '+';
@@ -151,7 +151,7 @@
 
   .profile-card {
     display: flex;
-    align-items: center; // Vertically align items
+    align-items: center;
     gap: 12px;
     padding: 10px;
     background: rgba(30, 30, 47, 0.6);
@@ -168,9 +168,9 @@
     }
 
     .profile-avatar {
-      width: 32px; // Further reduce avatar size
-      height: 32px; // Further reduce avatar size
-      border-radius: 8px; // Adjust border radius
+      width: 32px;
+      height: 32px; 
+      border-radius: 8px; 
       background: var(--caribbean-green-500);
       color: white;
       display: flex;
@@ -686,7 +686,7 @@
 }
 
 [data-theme="light"] {
-  // Add all the light theme variables from Dashboard.scss
+  // Adding all the light theme variables from Dashboard.scss
 
   .report-container {
     background: var(--bg-primary);
@@ -724,7 +724,7 @@
   }
 }
 
-// Import the base styles
+// Importing the base styles
 @import './Dashboard.scss';
 
 
