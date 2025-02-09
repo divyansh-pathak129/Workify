@@ -155,7 +155,11 @@ function Report() {
   };
 
   const handleLogout = () => {
-    console.log('Logging out...');
+    // Clear any stored data
+    localStorage.removeItem('userData');
+    localStorage.removeItem('reportData');
+    // Navigate to login page
+    navigate('/');
   };
 
   const handleProfileClick = () => {

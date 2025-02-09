@@ -30,6 +30,7 @@ function Dashboard() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const [loadingModal, setLoadingModal] = useState(false);
+  const [expandedRow, setExpandedRow] = useState(null);
 
   socket.on("reportData", (content) => {
     console.log(content);
@@ -182,6 +183,18 @@ function Dashboard() {
     });
   };
 
+  const handleRowClick = (jobId) => {
+    setExpandedRow(expandedRow === jobId ? null : jobId);
+  };
+
+  const handleDeleteJob = (jobId, e) => {
+    e.stopPropagation(); // Prevent row from toggling
+    if (window.confirm('Are you sure you want to delete this job post?')) {
+      socket.emit("deleteJob", { jobId, userId: id });
+      toast.success('Job post deleted successfully');
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-sidebar">
@@ -294,39 +307,82 @@ function Dashboard() {
                 </thead>
                 <tbody>
                   {jobsData.map((job, index) => (
-                    <tr key={job.id || index}>
-                      <td>{index + 1}</td>
-                      {getHeaders().map(header => (
-                        <td key={header}>{formatValue(job[header], header)}</td>
-                      ))}
-                      <td>
-                        <button 
-                          className="evaluate-btn"
-                          onClick={() => handleEvaluate(job._id)}
-                        >
-                          Evaluate
-                        </button>
-                      </td>
-                      <td>
-                        <button 
-                          className="share-btn"
-                          onClick={() => handleShare(job._id)}
-                          title="Copy application link"
-                        >
-                          <svg 
-                            width="16" 
-                            height="16" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="2"
+                    <React.Fragment key={job._id || index}>
+                      <tr 
+                        className="expandable"
+                        onClick={() => handleRowClick(job._id)}
+                      >
+                        <td>{index + 1}</td>
+                        {getHeaders().map(header => (
+                          <td key={header}>{formatValue(job[header], header)}</td>
+                        ))}
+                        <td>
+                          <button 
+                            className="evaluate-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEvaluate(job._id);
+                            }}
                           >
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
+                            Evaluate
+                          </button>
+                        </td>
+                        <td>
+                          <button 
+                            className="share-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleShare(job._id);
+                            }}
+                            title="Copy application link"
+                          >
+                            <svg 
+                              width="16" 
+                              height="16" 
+                              viewBox="0 0 24 24" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              strokeWidth="2"
+                            >
+                              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                      {expandedRow === job._id && (
+                        <tr className="expanded-content">
+                          <td colSpan={getHeaders().length + 3}>
+                            <div className="expanded-details">
+                              <div className="details-grid">
+                                <div className="detail-item">
+                                  <h4>Description</h4>
+                                  <p>{job.description || 'No description available'}</p>
+                                </div>
+                                <div className="detail-item">
+                                  <h4>Requirements</h4>
+                                  <p>{Array.isArray(job.requirements) ? job.requirements.join(', ') : job.requirements || 'None specified'}</p>
+                                </div>
+                                <div className="detail-item">
+                                  <h4>Skills</h4>
+                                  <p>{Array.isArray(job.skills) ? job.skills.join(', ') : job.skills || 'None specified'}</p>
+                                </div>
+                                <div className="detail-item">
+                                  <h4>Company Values</h4>
+                                  <p>{Array.isArray(job.companyValues) ? job.companyValues.join(', ') : job.companyValues || 'None specified'}</p>
+                                </div>
+                              </div>
+                              <button 
+                                className="remove-btn"
+                                onClick={(e) => handleDeleteJob(job._id, e)}
+                              >
+                                Remove Job Post
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>
