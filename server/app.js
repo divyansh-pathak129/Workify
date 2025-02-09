@@ -88,8 +88,9 @@ io.on('connection', (socket) => {
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const analysisText = await result.response.text();
-            console.log(analysisText);
-            socket.emit("report", analysisText);
+            const analysis = JSON.parse(analysisText);
+            console.log(analysis);
+            socket.emit("reportData", analysis);
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
             socket.emit("error", { 
