@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications, createJob, insertJob } = require('./mongo1');
+const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications, insertJob, createJob } = require('./mongo1');
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -50,15 +50,12 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on(
-        "createJob", async (jobData, id) => {
-            console.log(jobData, id);
-            const data = await createJob(jobData, id);
-            console.log(data);
-            insertJob(data, id);
-            
-        }
-    )
+    socket.on("createJob", async (formData, id) => {
+        // console.log(formData, id);
+        const jobId = await createJob(formData, id);
+        await insertJob(jobId, id);
+        socket.emit("jobCreated", { status: "ok", jobId });
+    })
 
     socket.on("fetchUserData", async (id) => {
         const data = await fetchUserData(id);
@@ -72,37 +69,18 @@ io.on('connection', (socket) => {
         try {
             console.log('Evaluating job:', jobId);
             const jobData = await getRawData(jobId);
-            if (!jobData) {
-                throw new Error("Job data not found");
-            }
-            
             const applicationsData = await applicationData(jobData.applications);
-            if (!applicationsData || !applicationsData.content) {
-                throw new Error("Applications data not found");
-            }
-
             const prompt = await generatePrompt(jobData, applicationsData);
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const analysisText = await result.response.text();
-            
-            // Validate that we have valid JSON before sending
-            try {
-                const parsedAnalysis = JSON.parse(analysisText);
-                console.log("Sending report data:", parsedAnalysis);
-                socket.emit("reportData", parsedAnalysis);
-            } catch (parseError) {
-                console.error("Invalid JSON response:", parseError);
-                socket.emit("reportError", { 
-                    status: "error", 
-                    message: "Invalid analysis format" 
-                });
-            }
+            console.log(analysisText);
+            socket.emit("report", analysisText);
         } catch (error) {
             console.error("Error in evaluateJob handler:", error);
-            socket.emit("reportError", { 
+            socket.emit("error", { 
                 status: "error", 
-                message: error.message || "Failed to generate analysis" 
+                message: "Failed to generate analysis" 
             });
         }
     })

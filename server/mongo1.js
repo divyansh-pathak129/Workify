@@ -298,12 +298,17 @@ async function createJob (jobData, id) {
       jobPositon: jobData.jobPosition,
       salary: jobData.salary,
       companyValues: jobData.companyValues,
+      jobType: jobData.type,
+      jobLocation: jobData.location,
+      jobCompany: jobData.company,
+      jobRequirements: jobData.requirements,
+      jobDescription: jobData.description,
       dateOfCreation: new Date(),
       parentUserId: new ObjectId(id),
       isOpen: true,
       applications: []
     }
-    console.log(pushData)
+    // console.log(pushData)
     const job = await collection.insertOne(pushData);
     return pushData._id;
   } catch (error) {

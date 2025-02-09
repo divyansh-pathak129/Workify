@@ -1,0 +1,65 @@
+{
+  "content": [
+    {
+      "_id": {
+        "$oid": "67a873357a1daf64b505ae6c"
+      },
+      "jobPositon": "Legal Associate",
+      "salary": "80000",
+      "companyValues": [
+        "Integrity",
+        "Peace",
+        "Values"
+      ],
+      "jobType": "Full-time",
+      "jobLocation": "Goa, India",
+      "jobCompany": "BITS Goa",
+      "jobRequirements": [
+        "NoReq"
+      ],
+      "jobDescription": "We need someone with high intellect and good IQ no reqs other than that",
+      "dateOfCreation": {
+        "$date": {
+          "$numberLong": "1739092789072"
+        }
+      },
+      "parentUserId": {
+        "$oid": "67a647f14d5e247755144371"
+      },
+      "isOpen": true,
+      "applications": []
+    },
+    {
+      "_id": "job002",
+      "jobPositon": "UX/UI Designer",
+      "salary": 95000,
+      "companyValues": ["Creativity", "User-Centric", "Innovation"],
+      "jobLocation": "New York, NY",
+      "isOpen": true,
+      "applications": ["app003"],
+      "dateOfCreation": "2024-01-20T00:00:00.000Z",
+      "jobRequirements": [
+        "3+ years of UI/UX design experience",
+        "Proficiency in Figma",
+        "Portfolio of web/mobile projects",
+        "Experience with user research"
+      ]
+    },
+    {
+      "_id": "job003",
+      "jobPositon": "Full Stack Developer",
+      "salary": 135000,
+      "companyValues": ["Growth", "Innovation", "Work-Life Balance"],
+      "jobLocation": "Remote",
+      "isOpen": true,
+      "applications": [],
+      "dateOfCreation": "2024-01-25T00:00:00.000Z",
+      "jobRequirements": [
+        "4+ years of full stack development",
+        "Experience with Node.js and React",
+        "Database design experience",
+        "AWS certification preferred"
+      ]
+    }
+  ]
+}

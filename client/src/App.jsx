@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Report from './pages/Report'
 import ApplicationForm from './pages/application'
 import JobForm from './pages/CreateJob'
+import Forum from './pages/Forum'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/createjob/:id" element={<JobForm />} />
       <Route path="/" element={<Login />} />
       <Route path="/application/:jobId" element={<ApplicationForm />} />
+      <Route path="/forum/" element={<Forum />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard/:id" element={<Dashboard />} />
     </Routes>

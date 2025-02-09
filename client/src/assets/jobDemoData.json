@@ -1,0 +1,34 @@
+{
+    "_id": {
+      "$oid": "67a711554d5e247755144393"
+    },
+    "jobPositon": "SDE Head",
+    "salary": {
+      "$numberDouble": "4000000.0"
+    },
+    "jobDescription": "Lead the team of SDEs",
+    "jobRequirements": [
+      "Experience in leading a team of SDEs",
+      "Experience in software development",
+      "Experience in software architecture"
+    ],
+    "jobLocation": "Bangalore",
+    "parentUserId": {
+      "$oid": "67a647f14d5e247755144371"
+    },
+    "isOpen": true,
+    "applications": [
+      "67a75f845c65e303c752fe9c",
+      "67a74fd95c65e303c752fe9b",
+      "67a7ccc94fa7bae4bfb334c6",
+      "67a83587d2bce2438908bed1"
+    ],
+    "companyValues": [
+      "Integrity"
+    ],
+    "dateOfCreation": {
+      "$date": {
+        "$numberLong": "1733941800000"
+      }
+    }
+  }

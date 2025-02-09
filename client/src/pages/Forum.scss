@@ -1,0 +1,411 @@
+@import './Dashboard.scss';
+
+.forum-status {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  
+  &.pending {
+    background: rgba(255, 170, 0, 0.1);
+    color: #ffaa00;
+    border: 1px solid rgba(255, 170, 0, 0.2);
+  }
+  
+  &.approved {
+    background: rgba(0, 208, 163, 0.1);
+    color: var(--caribbean-green-400);
+    border: 1px solid var(--caribbean-green-900);
+  }
+  
+  &.rejected {
+    background: rgba(255, 86, 86, 0.1);
+    color: #ff5656;
+    border: 1px solid rgba(255, 86, 86, 0.2);
+  }
+}
+
+.dashboard-table {
+  td {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .evaluate-btn {
+    min-width: 100px;
+  }
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.application-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: var(--caribbean-green-600);
+  }
+
+  .application-header {
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+
+    .applicant-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .applicant-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--caribbean-green-500);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+      }
+
+      h3 {
+        margin: 0 0 0.25rem;
+        color: var(--caribbean-green-200);
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .application-content {
+    padding: 1.25rem;
+
+    .info-group {
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      label {
+        display: block;
+        color: var(--caribbean-green-400);
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+      }
+
+      p {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+
+        .school {
+          display: block;
+          color: var(--text-secondary);
+          font-size: 0.85rem;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+
+    .skills-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  
+  &.pending {
+    background: rgba(255, 170, 0, 0.1);
+    color: #ffaa00;
+    border: 1px solid rgba(255, 170, 0, 0.2);
+  }
+  
+  &.approved {
+    background: rgba(0, 208, 163, 0.1);
+    color: var(--caribbean-green-400);
+    border: 1px solid var(--caribbean-green-900);
+  }
+  
+  &.rejected {
+    background: rgba(255, 86, 86, 0.1);
+    color: #ff5656;
+    border: 1px solid rgba(255, 86, 86, 0.2);
+  }
+}
+
+.skill-badge {
+  background: var(--bg-secondary);
+  color: var(--caribbean-green-300);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  border: 1px solid var(--caribbean-green-900);
+}
+
+.view-details-btn {
+  background: rgba(0, 208, 163, 0.1);
+  color: var(--caribbean-green-400);
+  border: 1px solid var(--caribbean-green-600);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--caribbean-green-500);
+    color: white;
+    transform: translateY(-1px);
+  }
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.job-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: var(--caribbean-green-600);
+  }
+
+  .job-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+
+    .job-title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+
+      h3 {
+        color: var(--caribbean-green-200);
+        font-size: 1.2rem;
+        margin: 0;
+      }
+
+      .location-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+    }
+
+    .job-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .salary {
+        color: var(--caribbean-green-400);
+        font-weight: 500;
+      }
+
+      .date {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .job-content {
+    padding: 1.25rem;
+
+    .requirements-section {
+      margin-bottom: 1.5rem;
+
+      h4 {
+        color: var(--caribbean-green-300);
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          color: var(--text-primary);
+          margin-bottom: 0.5rem;
+          padding-left: 1.5rem;
+          position: relative;
+          font-size: 0.95rem;
+
+          &:before {
+            content: '•';
+            color: var(--caribbean-green-500);
+            position: absolute;
+            left: 0;
+          }
+        }
+      }
+    }
+
+    .values-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+
+    .applications-count {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.value-badge {
+  background: rgba(0, 208, 163, 0.1);
+  color: var(--caribbean-green-300);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  border: 1px solid var(--caribbean-green-900);
+}
+
+.apply-btn {
+  background: var(--caribbean-green-500);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--caribbean-green-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 208, 163, 0.2);
+  }
+}
+
+[data-theme="light"] {
+  .forum-status {
+    &.pending {
+      background: rgba(255, 170, 0, 0.1);
+      color: #cc8800;
+      border-color: rgba(255, 170, 0, 0.3);
+    }
+    
+    &.approved {
+      background: rgba(0, 208, 163, 0.1);
+      color: var(--caribbean-green-700);
+      border-color: var(--caribbean-green-300);
+    }
+    
+    &.rejected {
+      background: rgba(255, 86, 86, 0.1);
+      color: #cc4444;
+      border-color: rgba(255, 86, 86, 0.3);
+    }
+  }
+
+  .application-card {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+
+    .applicant-info h3 {
+      color: var(--caribbean-green-800);
+    }
+
+    .info-group {
+      label {
+        color: var(--caribbean-green-700);
+      }
+
+      p {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .skill-badge {
+    background: var(--caribbean-green-50);
+    color: var(--caribbean-green-700);
+    border-color: var(--caribbean-green-200);
+  }
+
+  .view-details-btn {
+    background: var(--caribbean-green-50);
+    color: var(--caribbean-green-700);
+    border-color: var(--caribbean-green-200);
+
+    &:hover {
+      background: var(--caribbean-green-600);
+      color: white;
+      border-color: var(--caribbean-green-600);
+    }
+  }
+
+  .job-card {
+    .job-header {
+      h3 {
+        color: var(--caribbean-green-800);
+      }
+    }
+
+    .requirements-section {
+      h4 {
+        color: var(--caribbean-green-700);
+      }
+    }
+
+    .value-badge {
+      background: var(--caribbean-green-50);
+      color: var(--caribbean-green-700);
+      border-color: var(--caribbean-green-200);
+    }
+  }
+}
