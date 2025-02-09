@@ -35,12 +35,18 @@ function Forum() {
 
   // Handle applications data with fallback to demo data
   socket.on("jobsData", (data) => {
-    if (data.content && data.content.length > 0) {
+    console.log(data.content);
+    console.log(demoData.content);
+    // if (data.content && data.content.length > 0) {
       setJobsData(data.content);
-    } else {
-      setJobsData(demoData.content);
-    }
+    // } else {
+    //   setJobsData(demoData.content);
+    // }
   });
+
+//   useEffect(() => {
+//     console.log(jobsData);
+//   },[jobsData])
 
   const formatSalary = (salary) => {
     return new Intl.NumberFormat('en-US', {
@@ -74,6 +80,19 @@ function Forum() {
     navigate(`/application/${jobId._id}`);
   };
 
+  const handleJobRequirements = (requirements) => {
+    if (!requirements) return ['No requirements specified'];
+    if (Array.isArray(requirements)) return requirements;
+    return ['No requirements specified'];
+  };
+
+  const handleCompanyValues = (values) => {
+    if (!values) return ['Not specified'];
+    if (Array.isArray(values)) return values;
+    if (typeof values === 'string') return [values];
+    return ['Not specified'];
+  };
+
   return (
     <div className="dashboard-container">
       <div className='dashboard-content'>
@@ -84,17 +103,17 @@ function Forum() {
         </div>
         <div className='dashboard-content-body'>
           <div className="jobs-grid">
-            {jobsData.map((job) => (
+            {jobsData?.map((job) => (
               <div key={job._id} className="job-card">
                 <div className="job-header">
                   <div className="job-title-section">
-                    <h3>{job.jobPositon}</h3>
+                    <h3>{job.jobPositon || 'Position Not Specified'}</h3>
                     <span className="location-badge">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
                         <circle cx="12" cy="10" r="3" />
                       </svg>
-                      {job.jobLocation}
+                      {job.jobLocation || 'Location Not Specified'}
                     </span>
                   </div>
                   <div className="job-meta">
@@ -104,10 +123,17 @@ function Forum() {
                 </div>
                 
                 <div className="job-content">
+                  {job.jobDescription && (
+                    <div className="description-section">
+                      <h4>Description</h4>
+                      <p>{job.jobDescription}</p>
+                    </div>
+                  )}
+
                   <div className="requirements-section">
                     <h4>Requirements</h4>
                     <ul>
-                      {job.jobRequirements.map((req, index) => (
+                      {handleJobRequirements(job.jobRequirements).map((req, index) => (
                         <li key={index}>{req}</li>
                       ))}
                     </ul>
@@ -116,7 +142,7 @@ function Forum() {
                   <div className="values-section">
                     <h4>Company Values</h4>
                     <div className="values-container">
-                      {job.companyValues.map((value, index) => (
+                      {handleCompanyValues(job.companyValues).map((value, index) => (
                         <span key={index} className="value-badge">
                           {value}
                         </span>
@@ -126,7 +152,7 @@ function Forum() {
 
                   <div className="job-footer">
                     <span className="applications-count">
-                      {job.applications.length} applications
+                      {Array.isArray(job.applications) ? job.applications.length : 0} applications
                     </span>
                     <button 
                       className="apply-btn"

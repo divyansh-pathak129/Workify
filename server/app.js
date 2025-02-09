@@ -59,7 +59,8 @@ io.on('connection', (socket) => {
         const data = await fetchJobsAll(); 
         // console.log(data);
         if(data.status === "ok"){
-            socket.emit("jobsData", data.content)
+            console.log("ok")
+            socket.emit("jobsData", data)
         }
     })
 
