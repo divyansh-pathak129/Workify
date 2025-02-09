@@ -3,7 +3,7 @@ const http = require('http');
 const express  = require('express');
 const { Server } = require('socket.io');
 const cors = require("cors");
-const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications, insertJob, createJob } = require('./mongo1');
+const { login, fetchUserData, fetchJobs, evalate, getRawData, applicationData, generatePrompt, insertApplication, updateJobApplications, insertJob, createJob, fetchJobsAll } = require('./mongo1');
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -47,6 +47,14 @@ io.on('connection', (socket) => {
         // console.log(data);
         if(data.status === "ok"){
             socket.emit("jobsData", data)
+        }
+    })
+
+    socket.on ("jobsFetchAll", async () => {
+        const data = await fetchJobsAll(); 
+        // console.log(data);
+        if(data.status === "ok"){
+            socket.emit("jobsData", data.content)
         }
     })
 

@@ -24,7 +24,7 @@ function Forum() {
 
   useEffect(() => {
     socket.emit("fetchUserData", id);
-    socket.emit("jobsFetch");
+    socket.emit("jobsFetchAll");
     setJobsData(demoData.content);
   }, [id]);
 
@@ -34,7 +34,7 @@ function Forum() {
   });
 
   // Handle applications data with fallback to demo data
-  socket.on("applicationsData", (data) => {
+  socket.on("jobsData", (data) => {
     if (data.content && data.content.length > 0) {
       setJobsData(data.content);
     } else {
@@ -50,23 +50,32 @@ function Forum() {
     }).format(salary);
   };
 
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US', {
+  const formatDate = (dateValue) => {
+    let timestamp;
+    if (typeof dateValue === 'object' && dateValue.$date) {
+      // Handle MongoDB $date format
+      timestamp = parseInt(dateValue.$date.$numberLong);
+    } else {
+      // Handle regular date string
+      timestamp = new Date(dateValue).getTime();
+    }
+    
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      hour: '2-digit',
+      minute: '2-digit'
     });
   };
 
   const handleApply = (jobId) => {
-    navigate(`/application/${jobId}`);
+    const string = JSON.stringify(jobId._id)
+    navigate(`/application/${jobId._id}`);
   };
 
   return (
     <div className="dashboard-container">
-      <div className="dashboard-sidebar">
-        {/* ... existing sidebar code ... */}
-      </div>
       <div className='dashboard-content'>
         <div className='dashboard-content-header'>
           <div className='dashboard-content-header-left'>
@@ -90,12 +99,7 @@ function Forum() {
                   </div>
                   <div className="job-meta">
                     <span className="salary">{formatSalary(job.salary)}/year</span>
-                    <span className="date">Posted {job.dateOfCreation && new Date(job.dateOfCreation.$date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}</span>
-                    {/* <span className="date">Posted {formatDate(job.dateOfCreation)}</span> */}
+                    <span className="date">Posted {formatDate(job.dateOfCreation)}</span>
                   </div>
                 </div>
                 
@@ -126,7 +130,7 @@ function Forum() {
                     </span>
                     <button 
                       className="apply-btn"
-                      onClick={() => handleApply(job._id)}
+                      onClick={() => handleApply(job)}
                     >
                       Apply Now
                     </button>
