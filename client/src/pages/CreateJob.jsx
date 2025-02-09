@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { toast, Toaster } from 'react-hot-toast';
@@ -28,10 +28,31 @@ function JobForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("createJob", formData, id );
-    toast.success('Job posted successfully!');
-    // setTimeout(() => navigate(`/dashboard/${id}`), 1500);
+    // Only emit the event, don't show toast here
+    socket.emit("createJob", formData, id);
+    // Navigate back to dashboard after a short delay
+    setTimeout(() => {
+      navigate(`/dashboard/${id}`);
+    }, 1000);
   };
+
+  // Socket listener handles the success/error messages
+  useEffect(() => {
+    socket.on("jobCreated", (response) => {
+      if (response.status === "ok") {
+        toast.success('Job post created successfully!');
+        setTimeout(() => {
+          navigate(`/dashboard/${id}`);
+        }, 1000);
+      } else {
+        toast.error('Failed to create job post');
+      }
+    });
+
+    return () => {
+      socket.off("jobCreated");
+    };
+  }, [navigate, id]);
 
   const handleChange = (e, field) => {
     const { value } = e.target;
