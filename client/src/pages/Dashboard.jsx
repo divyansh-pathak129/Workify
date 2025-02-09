@@ -193,6 +193,7 @@ function Dashboard() {
       // Remove from local state immediately
       setJobsData(prevJobs => prevJobs.filter(job => job._id !== jobId));
       setExpandedRow(null);
+      socket.emit("deleteJob", jobId, id);
       toast.success('Job post removed from view');
       
       // Refresh the jobs data after a brief delay
