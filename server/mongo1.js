@@ -90,7 +90,7 @@ process.on('SIGINT', async () => {
     process.exit(0);
   } catch (error) {
     console.error('Error while closing MongoDB connection:', error);
-    process.exit(1);
+    process.exit(0);
   }
 });
 
