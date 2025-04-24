@@ -1,9 +1,9 @@
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = "mongodb+srv://divyanshpathak129:qxyUYuq8ylKsc9FN@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/yourDatabaseName"; // Replace with your MongoDB URI
 const { getClient, closeClient, releaseClient } = require('./clientChecker.js');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyDfd1sWQARRkqOQFf-9DXXpmTK5I_86up0");
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "Your API Key");
 
 // Create a MongoClient instance
 const client = new MongoClient(uri, {

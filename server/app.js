@@ -7,7 +7,7 @@ const { login, fetchUserData,deleteJob, removeJob, fetchJobs, evalate, getRawDat
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI("AIzaSyDfd1sWQARRkqOQFf-9DXXpmTK5I_86up0");
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "Your API Key");
 
 const app = express()
 app.use(cors());

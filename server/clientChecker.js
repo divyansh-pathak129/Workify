@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://divyanshpathak129:qxyUYuq8ylKsc9FN@workify-data.hzaze.mongodb.net/?retryWrites=true&w=majority&appName=workify-data";
+const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/yourDatabaseName"; // Replace with your MongoDB URI
 
 
 
